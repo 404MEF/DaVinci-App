@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="100dp">
+  <!--Register Text-->
+  <TextView
+      style="@style/AccountActivity_Title"
+      android:text="Register"/>
+  <View style="@style/AccountActivity_Space"/>
+  <!--Username Input-->
+  <EditText
+      style="@style/AccountActivity_Input"
+      android:id="@+id/Register_usernameField"
+      android:hint="Username"
+      android:inputType="text" />
+  <View style="@style/AccountActivity_Space"/>
+  <!--Email Input-->
+  <EditText
+      style="@style/AccountActivity_Input"
+      android:id="@+id/Register_emailField"
+      android:hint="Email"
+      android:inputType="text" />
+  <View style="@style/AccountActivity_Space"/>
+  <!--Password Input-->
+  <EditText
+      style="@style/AccountActivity_Input"
+      android:id="@+id/Register_passwordField"
+      android:hint="Password"
+      android:password="true"
+      android:inputType="textPassword" />
+  <View style="@style/AccountActivity_Space"/>
+  <!--Password Confirm Input-->
+  <EditText
+      style="@style/AccountActivity_Input"
+      android:id="@+id/Register_passwordConfirmField"
+      android:hint="Confirm Password"
+      android:password="true"
+      android:inputType="textPassword" />
+  <View style="@style/AccountActivity_Space"/>
+  <!--Register Button-->
+  <Button
+      style="@style/AccountActivity_Button"
+      android:id="@+id/Register_registerButton"
+      android:text="Register"/>
+</LinearLayout>

@@ -1,0 +1,12 @@
+<resources>
+
+  <dimen name="AccountActivity_Title_Text">34dp</dimen>
+  <dimen name="AccountActivity_Description_Margin">24dp</dimen>
+  <dimen name="AccountActivity_Description_Text">14dp</dimen>
+  <dimen name="AccountActivity_Space">18dp</dimen>
+  <dimen name="AccountActivity_Input_Margin">32dp</dimen>
+  <dimen name="AccountActivity_Input_Text">14dp</dimen>
+  <dimen name="AccountActivity_Button_Margin">32dp</dimen>
+  <dimen name="AccountActivity_Button_Text">14dp</dimen>
+
+</resources>

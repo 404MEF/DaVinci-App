@@ -4,7 +4,7 @@ using Android.OS;
 
 namespace Davinci
 {
-    [Activity(Label = "Davinci", MainLauncher = true)]
+    [Activity(Theme = "@style/DavinciTheme", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait, WindowSoftInputMode = Android.Views.SoftInput.AdjustPan)]
     public class MainActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
