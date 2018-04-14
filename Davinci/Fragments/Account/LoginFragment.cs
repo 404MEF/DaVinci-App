@@ -4,14 +4,13 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
-using Davinci.Api.Models;
+using Davinci.Api;
 
 namespace Davinci.Fragments.Account
 {
     class LoginFragment : BaseFragment
     {
         EditText usernameField, passwordField;
-        Button loginButton;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -23,7 +22,7 @@ namespace Davinci.Fragments.Account
             usernameField = view.FindViewById<EditText>(Resource.Id.Login_usernameField);
             passwordField = view.FindViewById<EditText>(Resource.Id.Login_passwordField);
 
-            loginButton = view.FindViewById<Button>(Resource.Id.Login_loginButton);
+            Button loginButton = view.FindViewById<Button>(Resource.Id.Login_loginButton);
             Button registerBtn = view.FindViewById<Button>(Resource.Id.Login_registerButton);
             Button resetBtn = view.FindViewById<Button>(Resource.Id.Login_forgetButton);
 
@@ -33,38 +32,34 @@ namespace Davinci.Fragments.Account
             resetBtn.Click += (s, e) => ResetPassword();
         }
 
-        private void Authenticate()
+        private async void Authenticate()
         {
-            bool isValid = ValidateLoginInput();
+            bool isValid = validateInput();
 
             if (!isValid)
                 return;
 
-            loginButton.Text = "Authenticating...";
+            //parentActivity.Window.AddFlags(WindowManagerFlags.NotTouchable);
 
-            mActivity.Window.AddFlags(WindowManagerFlags.NotTouchable);
-            //AuthenticationModel response = Task.Run(() => DavinciApi.Authenticate(usernameField.Text, passwordField.Text)).Result;
-            AuthenticationModel response = new AuthenticationModel();
-            response.result = "ok1";
+            var response = await DavinciApi.Authenticate(usernameField.Text, passwordField.Text);
 
-            if (response.result == "ok")
+            if (response.isOK)
             {
-                //Switch activity
+                //Switch to main feed
+                Infobar.Show(this.Context, this.View, response.message, Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal);
             }
             else
             {
-                loginButton.Text = "Authentication failed";
-                Task.Run(async () =>
-                {
-                    await Task.Delay(2000);
-                    mActivity.RunOnUiThread(() => mActivity.Window.ClearFlags(WindowManagerFlags.NotTouchable));
-                    mActivity.RunOnUiThread(() => loginButton.Text = "Login");
-                });
+                //parentActivity.RunOnUiThread(() => parentActivity.Window.ClearFlags(WindowManagerFlags.NotTouchable));
+                Infobar.Show(this.Context, this.View, response.message, Infobar.InfoLevel.Error, GravityFlags.Top | GravityFlags.FillHorizontal);
             }
         }
 
-        private bool ValidateLoginInput()
+        private bool validateInput()
         {
+            usernameField.Text = usernameField.Text.Trim();
+            passwordField.Text = passwordField.Text.Trim();
+
             if (string.IsNullOrEmpty(usernameField.Text))
             {
                 usernameField.RequestFocus();
@@ -83,12 +78,12 @@ namespace Davinci.Fragments.Account
 
         private void Register()
         {
-            mActivity.ShowFragment(new RegisterFragment());
+            parentActivity.ShowFragment(new RegisterFragment());
         }
 
         private void ResetPassword()
         {
-            mActivity.ShowFragment(new ResetPasswordFragment());
+            parentActivity.ShowFragment(new ResetPasswordFragment());
 
         }
     }

@@ -4,14 +4,15 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
+using Davinci.Api;
 using Davinci.Api.Models;
 
 namespace Davinci.Fragments.Account
 {
     class RegisterFragment : BaseFragment
     {
-        EditText usernameField,emailField, passwordField,passwordConfirmField;
-        Button registerButton;
+        EditText usernameField, emailField, passwordField, passwordConfirmField;
+
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             return inflater.Inflate(Resource.Layout.RegisterFragment, container, false);
@@ -24,41 +25,44 @@ namespace Davinci.Fragments.Account
             passwordField = view.FindViewById<EditText>(Resource.Id.Register_passwordField);
             passwordConfirmField = view.FindViewById<EditText>(Resource.Id.Register_passwordConfirmField);
 
-            registerButton = view.FindViewById<Button>(Resource.Id.Register_registerButton);
+            Button registerButton = view.FindViewById<Button>(Resource.Id.Register_registerButton);
 
             registerButton.Click += (s, e) => Register();
         }
 
-        private void Register()
+        private async void Register()
         {
-            bool isValid = ValidateInput();
+            bool isValid = validateInput();
 
             if (!isValid)
                 return;
 
-            registerButton.Text = "Registering...";
+            //parentActivity.Window.AddFlags(WindowManagerFlags.NotTouchable);
+            var response = await DavinciApi.Register(usernameField.Text, emailField.Text, passwordField.Text);
 
-            mActivity.Window.AddFlags(WindowManagerFlags.NotTouchable);
-            //AuthenticationModel response = Task.Run(() => DavinciApi.Authenticate(usernameField.Text, passwordField.Text)).Result;
-
-            if (false)
+            if (response.isOK)
             {
                 //Switch activity
+                Infobar.Show(this.Context, this.View, response.message, Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal);
+                await Task.Delay(1000);
+                parentActivity.ShowFragment(new LoginFragment());
+                parentActivity.ClearStack();
             }
             else
             {
-                registerButton.Text = "Register failed";
-                mActivity.Window.ClearFlags(WindowManagerFlags.NotTouchable);
-                Task.Run(async () =>
-                {
-                    await Task.Delay(2000);
-                    registerButton.Text = "Register";
-                });
+                //parentActivity.RunOnUiThread(() => parentActivity.Window.ClearFlags(WindowManagerFlags.NotTouchable));
+                Infobar.Show(this.Context, this.View, response.message, Infobar.InfoLevel.Warning, GravityFlags.Top | GravityFlags.FillHorizontal);
+
             }
         }
 
-        private bool ValidateInput()
+        private bool validateInput()
         {
+            usernameField.Text = usernameField.Text.Trim();
+            emailField.Text = emailField.Text.Trim();
+            passwordField.Text = passwordField.Text.Trim();
+            passwordConfirmField.Text = passwordConfirmField.Text.Trim();
+
             if (string.IsNullOrEmpty(usernameField.Text))
             {
                 usernameField.RequestFocus();
@@ -81,6 +85,12 @@ namespace Davinci.Fragments.Account
             {
                 passwordConfirmField.RequestFocus();
                 passwordConfirmField.SetError("Password cannot be empty", null);
+                return false;
+            }
+            else if (passwordField.Text != passwordConfirmField.Text)
+            {
+                passwordConfirmField.RequestFocus();
+                passwordConfirmField.SetError("Passwords do not match", null);
                 return false;
             }
 

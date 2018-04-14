@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using RestSharp;
 using Newtonsoft.Json;
 using Davinci.Api.Models;
+using RestSharp.Authenticators;
 
 namespace Davinci.Api
 {
     public sealed class DavinciApi
     {
-        const string BASE_URL = @"http://api/api";
+        const string BASE_URL = @"http://10.0.2.2:3000/api";
 
         private static string formatUri(string url)
         {
@@ -22,7 +23,7 @@ namespace Davinci.Api
                 return url;
         }
 
-        private static T Get<T>(string resource, string url = BASE_URL)
+        private static T Get<T>(string resource, string url = BASE_URL) where T : BaseApiModel, new()
         {
             var client = new RestClient(formatUri(url));
             RestRequest request = new RestRequest(resource, Method.GET);
@@ -31,12 +32,19 @@ namespace Davinci.Api
 
             var response = client.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            try
+            {
                 return JsonConvert.DeserializeObject<T>(response.Content);
-            else
-                return default(T);
+            }
+            catch
+            {
+                T errorModel = new T();
+                errorModel.result = "bad";
+                errorModel.message = "Critical error";
+                return errorModel;
+            }
         }
-        private static async Task<T> GetAsync<T>(string resource, string url = BASE_URL)
+        private static async Task<T> GetAsync<T>(string resource, string url = BASE_URL) where T : BaseApiModel,new()
         {
             var client = new RestClient(formatUri(url));
             RestRequest request = new RestRequest(resource, Method.GET);
@@ -48,15 +56,23 @@ namespace Davinci.Api
             var cancellationTokenSource = new CancellationTokenSource();
             var response = await client.ExecuteTaskAsync(request, cancellationTokenSource.Token);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            try
+            {
                 return JsonConvert.DeserializeObject<T>(response.Content);
-            else
-                return default(T);
+            }
+            catch
+            {
+                T errorModel = new T();
+                errorModel.result = "bad";
+                errorModel.message = "Critical error";
+                return errorModel;
+            }
         }
 
-        private static T Post<T>(string resource, string jsonBody = "", string url = BASE_URL)
+        private static T Post<T>(string resource, string jsonBody = "", string url = BASE_URL, HttpBasicAuthenticator authenticator = null) where T : BaseApiModel, new()
         {
             var client = new RestClient(formatUri(url));
+            client.Authenticator = authenticator;
 
             RestRequest request = new RestRequest(resource, Method.POST);
             request.RequestFormat = DataFormat.Json;
@@ -66,14 +82,22 @@ namespace Davinci.Api
 
             var response = client.Execute(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK || response.StatusCode == System.Net.HttpStatusCode.Created || response.StatusCode == System.Net.HttpStatusCode.Continue)
+            try
+            {
                 return JsonConvert.DeserializeObject<T>(response.Content);
-            else
-                return default(T);
+            }
+            catch
+            {
+                T errorModel = new T();
+                errorModel.result = "bad";
+                errorModel.message = "Critical error";
+                return errorModel;
+            }
         }
-        private static async Task<T> PostAsync<T>(string resource, string jsonBody = "", string url = BASE_URL)
+        private static async Task<T> PostAsync<T>(string resource, string jsonBody = "", string url = BASE_URL, HttpBasicAuthenticator authenticator = null) where T : BaseApiModel, new()
         {
             var client = new RestClient(formatUri(url));
+            client.Authenticator = authenticator;
 
             RestRequest request = new RestRequest(resource, Method.POST);
             request.RequestFormat = DataFormat.Json;
@@ -84,34 +108,36 @@ namespace Davinci.Api
             var cancellationTokenSource = new CancellationTokenSource();
             var response = await client.ExecuteTaskAsync(request, cancellationTokenSource.Token);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK || response.StatusCode == System.Net.HttpStatusCode.Created || response.StatusCode == System.Net.HttpStatusCode.Continue)
+            try
+            {
                 return JsonConvert.DeserializeObject<T>(response.Content);
-            else
-                return default(T);
+            }
+            catch
+            {
+                T errorModel = new T();
+                errorModel.result = "bad";
+                errorModel.message = "Critical error";
+                return errorModel;
+            }
         }
 
         public static async Task<AuthenticationModel> Authenticate(string user, string password)
         {
-            const string resource = "authenticate";
+            const string resource = @"account/authenticate";
 
-            string body = JsonConvert.SerializeObject(new { username=user,password=password});
+            HttpBasicAuthenticator auth = new HttpBasicAuthenticator(user, password);
 
-            return await PostAsync<AuthenticationModel>(resource, body);
+            return await PostAsync<AuthenticationModel>(resource, authenticator: auth);
         }
 
-        //public static async Task<AccountConfigModel> GUID(string guid)
-        //{
-        //    string resource = "accountconfig/" + guid;
+        public static async Task<BaseApiModel> Register(string user, string email, string password)
+        {
+            const string resource = @"account/register";
 
-        //    return await GetAsync<AccountConfigModel>(resource);
-        //}
-        //public static async Task<UserProcessApprovalModel[]> UserProcessApprovals(string process, string platform)
-        //{
-        //    StringBuilder resource = new StringBuilder();
+            string body = JsonConvert.SerializeObject(new { username = user, email = email, password = password });
 
-        //    resource.Append("approvals/").Append(ApplicationState.Login.user).Append('/').Append(platform).Append('/').Append(process);
+            return await PostAsync<BaseApiModel>(resource, body);
+        }
 
-        //    return await GetAsync<UserProcessApprovalModel[]>(resource.ToString(), ApplicationState.Api.API_PREFIX);
-        //}
     }
 }

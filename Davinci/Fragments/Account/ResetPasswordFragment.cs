@@ -34,7 +34,7 @@ namespace Davinci.Fragments.Account
             if (!isValid)
                 return;
 
-            mActivity.Window.AddFlags(WindowManagerFlags.NotTouchable);
+            parentActivity.Window.AddFlags(WindowManagerFlags.NotTouchable);
             //AuthenticationModel response = Task.Run(() => DavinciApi.Authenticate(usernameField.Text, passwordField.Text)).Result;
 
             if (false)
@@ -44,7 +44,7 @@ namespace Davinci.Fragments.Account
             else
             {
                 resetButton.Text = "Password reset failed";
-                mActivity.Window.ClearFlags(WindowManagerFlags.NotTouchable);
+                parentActivity.Window.ClearFlags(WindowManagerFlags.NotTouchable);
                 Task.Run(async () =>
                 {
                     await Task.Delay(2000);

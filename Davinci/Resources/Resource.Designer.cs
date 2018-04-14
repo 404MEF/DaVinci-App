@@ -62,10 +62,16 @@ namespace Davinci
 			public const int abc_slide_out_top = 2130968585;
 			
 			// aapt resource value: 0x7f04000a
-			public const int slide_from_bottom = 2130968586;
+			public const int slide_from_left = 2130968586;
 			
 			// aapt resource value: 0x7f04000b
-			public const int slide_to_bottom = 2130968587;
+			public const int slide_from_right = 2130968587;
+			
+			// aapt resource value: 0x7f04000c
+			public const int slide_to_left = 2130968588;
+			
+			// aapt resource value: 0x7f04000d
+			public const int slide_to_right = 2130968589;
 			
 			static Animation()
 			{
@@ -1471,31 +1477,46 @@ namespace Davinci
 			public const int abc_textfield_search_material = 2130837577;
 			
 			// aapt resource value: 0x7f02004a
-			public const int Image2 = 2130837578;
+			public const int ic_chevron_right_black_24dp = 2130837578;
 			
 			// aapt resource value: 0x7f02004b
-			public const int Image3 = 2130837579;
+			public const int ic_error_black_24dp = 2130837579;
 			
 			// aapt resource value: 0x7f02004c
-			public const int Login_RippleLoginButton = 2130837580;
+			public const int ic_lock_outline_white_24dp = 2130837580;
 			
 			// aapt resource value: 0x7f02004d
-			public const int Login_RoundedButton = 2130837581;
+			public const int ic_perm_identity_white_24dp = 2130837581;
 			
 			// aapt resource value: 0x7f02004e
-			public const int Login_RoundedTextField = 2130837582;
+			public const int ic_warning_black_24dp = 2130837582;
 			
 			// aapt resource value: 0x7f02004f
-			public const int LoginBackgroundImage = 2130837583;
-			
-			// aapt resource value: 0x7f020052
-			public const int notification_template_icon_bg = 2130837586;
+			public const int Image2 = 2130837583;
 			
 			// aapt resource value: 0x7f020050
-			public const int SplashDrawable = 2130837584;
+			public const int Image3 = 2130837584;
 			
 			// aapt resource value: 0x7f020051
-			public const int SplashImage = 2130837585;
+			public const int Login_RippleLoginButton = 2130837585;
+			
+			// aapt resource value: 0x7f020052
+			public const int Login_RoundedButton = 2130837586;
+			
+			// aapt resource value: 0x7f020053
+			public const int Login_RoundedTextField = 2130837587;
+			
+			// aapt resource value: 0x7f020054
+			public const int LoginBackgroundImage = 2130837588;
+			
+			// aapt resource value: 0x7f020057
+			public const int notification_template_icon_bg = 2130837591;
+			
+			// aapt resource value: 0x7f020055
+			public const int SplashDrawable = 2130837589;
+			
+			// aapt resource value: 0x7f020056
+			public const int SplashImage = 2130837590;
 			
 			static Drawable()
 			{
@@ -1510,44 +1531,50 @@ namespace Davinci
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0b0055
-			public const int Login_forgetButton = 2131427413;
-			
-			// aapt resource value: 0x7f0b0054
-			public const int Login_loginButton = 2131427412;
+			// aapt resource value: 0x7f0b0052
+			public const int Infobar_root = 2131427410;
 			
 			// aapt resource value: 0x7f0b0053
-			public const int Login_passwordField = 2131427411;
-			
-			// aapt resource value: 0x7f0b0056
-			public const int Login_registerButton = 2131427414;
-			
-			// aapt resource value: 0x7f0b0052
-			public const int Login_usernameField = 2131427410;
-			
-			// aapt resource value: 0x7f0b0065
-			public const int Register_emailField = 2131427429;
-			
-			// aapt resource value: 0x7f0b0067
-			public const int Register_passwordConfirmField = 2131427431;
-			
-			// aapt resource value: 0x7f0b0066
-			public const int Register_passwordField = 2131427430;
-			
-			// aapt resource value: 0x7f0b0068
-			public const int Register_registerButton = 2131427432;
-			
-			// aapt resource value: 0x7f0b0064
-			public const int Register_usernameField = 2131427428;
-			
-			// aapt resource value: 0x7f0b006a
-			public const int Reset_resetButton = 2131427434;
-			
-			// aapt resource value: 0x7f0b0069
-			public const int Reset_usernameField = 2131427433;
+			public const int Infobar_text = 2131427411;
 			
 			// aapt resource value: 0x7f0b0057
-			public const int action0 = 2131427415;
+			public const int Login_forgetButton = 2131427415;
+			
+			// aapt resource value: 0x7f0b0056
+			public const int Login_loginButton = 2131427414;
+			
+			// aapt resource value: 0x7f0b0055
+			public const int Login_passwordField = 2131427413;
+			
+			// aapt resource value: 0x7f0b0058
+			public const int Login_registerButton = 2131427416;
+			
+			// aapt resource value: 0x7f0b0054
+			public const int Login_usernameField = 2131427412;
+			
+			// aapt resource value: 0x7f0b0067
+			public const int Register_emailField = 2131427431;
+			
+			// aapt resource value: 0x7f0b0069
+			public const int Register_passwordConfirmField = 2131427433;
+			
+			// aapt resource value: 0x7f0b0068
+			public const int Register_passwordField = 2131427432;
+			
+			// aapt resource value: 0x7f0b006a
+			public const int Register_registerButton = 2131427434;
+			
+			// aapt resource value: 0x7f0b0066
+			public const int Register_usernameField = 2131427430;
+			
+			// aapt resource value: 0x7f0b006c
+			public const int Reset_resetButton = 2131427436;
+			
+			// aapt resource value: 0x7f0b006b
+			public const int Reset_usernameField = 2131427435;
+			
+			// aapt resource value: 0x7f0b0059
+			public const int action0 = 2131427417;
 			
 			// aapt resource value: 0x7f0b0042
 			public const int action_bar = 2131427394;
@@ -1573,8 +1600,8 @@ namespace Davinci
 			// aapt resource value: 0x7f0b0043
 			public const int action_context_bar = 2131427395;
 			
-			// aapt resource value: 0x7f0b005b
-			public const int action_divider = 2131427419;
+			// aapt resource value: 0x7f0b005d
+			public const int action_divider = 2131427421;
 			
 			// aapt resource value: 0x7f0b0002
 			public const int action_menu_divider = 2131427330;
@@ -1609,14 +1636,14 @@ namespace Davinci
 			// aapt resource value: 0x7f0b0009
 			public const int calligraphy_tag_id = 2131427337;
 			
-			// aapt resource value: 0x7f0b0058
-			public const int cancel_action = 2131427416;
+			// aapt resource value: 0x7f0b005a
+			public const int cancel_action = 2131427418;
 			
 			// aapt resource value: 0x7f0b003a
 			public const int checkbox = 2131427386;
 			
-			// aapt resource value: 0x7f0b005e
-			public const int chronometer = 2131427422;
+			// aapt resource value: 0x7f0b0060
+			public const int chronometer = 2131427424;
 			
 			// aapt resource value: 0x7f0b001e
 			public const int collapseActionView = 2131427358;
@@ -1645,8 +1672,8 @@ namespace Davinci
 			// aapt resource value: 0x7f0b001b
 			public const int end = 2131427355;
 			
-			// aapt resource value: 0x7f0b0063
-			public const int end_padder = 2131427427;
+			// aapt resource value: 0x7f0b0065
+			public const int end_padder = 2131427429;
 			
 			// aapt resource value: 0x7f0b0026
 			public const int expand_activities_button = 2131427366;
@@ -1672,14 +1699,14 @@ namespace Davinci
 			// aapt resource value: 0x7f0b0027
 			public const int image = 2131427367;
 			
+			// aapt resource value: 0x7f0b0064
+			public const int info = 2131427428;
+			
+			// aapt resource value: 0x7f0b005e
+			public const int line1 = 2131427422;
+			
 			// aapt resource value: 0x7f0b0062
-			public const int info = 2131427426;
-			
-			// aapt resource value: 0x7f0b005c
-			public const int line1 = 2131427420;
-			
-			// aapt resource value: 0x7f0b0060
-			public const int line3 = 2131427424;
+			public const int line3 = 2131427426;
 			
 			// aapt resource value: 0x7f0b000a
 			public const int listMode = 2131427338;
@@ -1687,8 +1714,8 @@ namespace Davinci
 			// aapt resource value: 0x7f0b0029
 			public const int list_item = 2131427369;
 			
-			// aapt resource value: 0x7f0b005a
-			public const int media_actions = 2131427418;
+			// aapt resource value: 0x7f0b005c
+			public const int media_actions = 2131427420;
 			
 			// aapt resource value: 0x7f0b001c
 			public const int middle = 2131427356;
@@ -1789,8 +1816,8 @@ namespace Davinci
 			// aapt resource value: 0x7f0b0019
 			public const int src_over = 2131427353;
 			
-			// aapt resource value: 0x7f0b0059
-			public const int status_bar_latest_event_content = 2131427417;
+			// aapt resource value: 0x7f0b005b
+			public const int status_bar_latest_event_content = 2131427419;
 			
 			// aapt resource value: 0x7f0b004d
 			public const int submit_area = 2131427405;
@@ -1798,17 +1825,17 @@ namespace Davinci
 			// aapt resource value: 0x7f0b000c
 			public const int tabMode = 2131427340;
 			
-			// aapt resource value: 0x7f0b0061
-			public const int text = 2131427425;
+			// aapt resource value: 0x7f0b0063
+			public const int text = 2131427427;
 			
-			// aapt resource value: 0x7f0b005f
-			public const int text2 = 2131427423;
+			// aapt resource value: 0x7f0b0061
+			public const int text2 = 2131427425;
 			
 			// aapt resource value: 0x7f0b0035
 			public const int textSpacerNoButtons = 2131427381;
 			
-			// aapt resource value: 0x7f0b005d
-			public const int time = 2131427421;
+			// aapt resource value: 0x7f0b005f
+			public const int time = 2131427423;
 			
 			// aapt resource value: 0x7f0b002b
 			public const int title = 2131427371;
@@ -1951,52 +1978,61 @@ namespace Davinci
 			public const int AccountActivity = 2130903065;
 			
 			// aapt resource value: 0x7f03001a
-			public const int LoginFragment = 2130903066;
+			public const int FeedActivity = 2130903066;
 			
 			// aapt resource value: 0x7f03001b
-			public const int Main = 2130903067;
+			public const int Infobar = 2130903067;
 			
 			// aapt resource value: 0x7f03001c
-			public const int notification_media_action = 2130903068;
+			public const int LoginFragment = 2130903068;
 			
 			// aapt resource value: 0x7f03001d
-			public const int notification_media_cancel_action = 2130903069;
+			public const int Main = 2130903069;
 			
 			// aapt resource value: 0x7f03001e
-			public const int notification_template_big_media = 2130903070;
+			public const int notification_media_action = 2130903070;
 			
 			// aapt resource value: 0x7f03001f
-			public const int notification_template_big_media_narrow = 2130903071;
+			public const int notification_media_cancel_action = 2130903071;
 			
 			// aapt resource value: 0x7f030020
-			public const int notification_template_lines = 2130903072;
+			public const int notification_template_big_media = 2130903072;
 			
 			// aapt resource value: 0x7f030021
-			public const int notification_template_media = 2130903073;
+			public const int notification_template_big_media_narrow = 2130903073;
 			
 			// aapt resource value: 0x7f030022
-			public const int notification_template_part_chronometer = 2130903074;
+			public const int notification_template_lines = 2130903074;
 			
 			// aapt resource value: 0x7f030023
-			public const int notification_template_part_time = 2130903075;
+			public const int notification_template_media = 2130903075;
 			
 			// aapt resource value: 0x7f030024
-			public const int RegisterFragment = 2130903076;
+			public const int notification_template_part_chronometer = 2130903076;
 			
 			// aapt resource value: 0x7f030025
-			public const int ResetPasswordFragment = 2130903077;
+			public const int notification_template_part_time = 2130903077;
 			
 			// aapt resource value: 0x7f030026
-			public const int select_dialog_item_material = 2130903078;
+			public const int RegisterFragment = 2130903078;
 			
 			// aapt resource value: 0x7f030027
-			public const int select_dialog_multichoice_material = 2130903079;
+			public const int ResetPasswordFragment = 2130903079;
 			
 			// aapt resource value: 0x7f030028
-			public const int select_dialog_singlechoice_material = 2130903080;
+			public const int select_dialog_item_material = 2130903080;
 			
 			// aapt resource value: 0x7f030029
-			public const int support_simple_spinner_dropdown_item = 2130903081;
+			public const int select_dialog_multichoice_material = 2130903081;
+			
+			// aapt resource value: 0x7f03002a
+			public const int select_dialog_singlechoice_material = 2130903082;
+			
+			// aapt resource value: 0x7f03002b
+			public const int SettingsActivity = 2130903083;
+			
+			// aapt resource value: 0x7f03002c
+			public const int support_simple_spinner_dropdown_item = 2130903084;
 			
 			static Layout()
 			{
@@ -2087,20 +2123,20 @@ namespace Davinci
 		public partial class Style
 		{
 			
-			// aapt resource value: 0x7f080142
-			public const int AccountActivity_Button = 2131231042;
-			
-			// aapt resource value: 0x7f080140
-			public const int AccountActivity_Description = 2131231040;
+			// aapt resource value: 0x7f080143
+			public const int AccountActivity_Button = 2131231043;
 			
 			// aapt resource value: 0x7f080141
-			public const int AccountActivity_Input = 2131231041;
+			public const int AccountActivity_Description = 2131231041;
 			
-			// aapt resource value: 0x7f08013e
-			public const int AccountActivity_Space = 2131231038;
+			// aapt resource value: 0x7f080142
+			public const int AccountActivity_Input = 2131231042;
 			
 			// aapt resource value: 0x7f08013f
-			public const int AccountActivity_Title = 2131231039;
+			public const int AccountActivity_Space = 2131231039;
+			
+			// aapt resource value: 0x7f080140
+			public const int AccountActivity_Title = 2131231040;
 			
 			// aapt resource value: 0x7f08007d
 			public const int AlertDialog_AppCompat = 2131230845;
@@ -2531,8 +2567,14 @@ namespace Davinci
 			// aapt resource value: 0x7f08013a
 			public const int DavinciTheme = 2131231034;
 			
+			// aapt resource value: 0x7f08013d
+			public const int DavinciTheme_Feed = 2131231037;
+			
 			// aapt resource value: 0x7f08013c
 			public const int DavinciTheme_Login = 2131231036;
+			
+			// aapt resource value: 0x7f08013e
+			public const int DavinciTheme_Settings = 2131231038;
 			
 			// aapt resource value: 0x7f08013b
 			public const int DavinciTheme_Splash = 2131231035;
@@ -2608,6 +2650,18 @@ namespace Davinci
 			
 			// aapt resource value: 0x7f080035
 			public const int RtlUnderlay_Widget_AppCompat_ActionButton_Overflow = 2131230773;
+			
+			// aapt resource value: 0x7f080145
+			public const int SettingsActivity_CategoryDivider = 2131231045;
+			
+			// aapt resource value: 0x7f080144
+			public const int SettingsActivity_CategoryLabel = 2131231044;
+			
+			// aapt resource value: 0x7f080146
+			public const int SettingsActivity_SettingButton = 2131231046;
+			
+			// aapt resource value: 0x7f080147
+			public const int SettingsActivity_SettingDivider = 2131231047;
 			
 			// aapt resource value: 0x7f0800b2
 			public const int TextAppearance_AppCompat = 2131230898;
@@ -2842,9 +2896,6 @@ namespace Davinci
 			
 			// aapt resource value: 0x7f0800f3
 			public const int ThemeOverlay_AppCompat_Light = 2131230963;
-			
-			// aapt resource value: 0x7f08013d
-			public const int WhiteRipple = 2131231037;
 			
 			// aapt resource value: 0x7f0800f4
 			public const int Widget_AppCompat_ActionBar = 2131230964;

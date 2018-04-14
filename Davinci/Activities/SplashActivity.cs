@@ -4,6 +4,7 @@ using Android.App;
 using Android.OS;
 using Android.Content;
 using Android.Support.V7.App;
+using Android.Net;
 
 namespace Davinci
 {
@@ -25,7 +26,7 @@ namespace Davinci
 
         async void SimulateStartup()
         {
-            await Task.Delay(500);
+            await Task.Delay(1000);
             StartActivity(new Intent(Application.Context, typeof(AccountActivity)));
         }
     }

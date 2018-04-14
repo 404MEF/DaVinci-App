@@ -4,44 +4,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="100dp">
-  <!--Register Text-->
-  <TextView
-      style="@style/AccountActivity_Title"
-      android:text="Register"/>
-  <View style="@style/AccountActivity_Space"/>
-  <!--Username Input-->
-  <EditText
-      style="@style/AccountActivity_Input"
-      android:id="@+id/Register_usernameField"
-      android:hint="Username"
-      android:inputType="text" />
-  <View style="@style/AccountActivity_Space"/>
-  <!--Email Input-->
-  <EditText
-      style="@style/AccountActivity_Input"
-      android:id="@+id/Register_emailField"
-      android:hint="Email"
-      android:inputType="text" />
-  <View style="@style/AccountActivity_Space"/>
-  <!--Password Input-->
-  <EditText
-      style="@style/AccountActivity_Input"
-      android:id="@+id/Register_passwordField"
-      android:hint="Password"
-      android:password="true"
-      android:inputType="textPassword" />
-  <View style="@style/AccountActivity_Space"/>
-  <!--Password Confirm Input-->
-  <EditText
-      style="@style/AccountActivity_Input"
-      android:id="@+id/Register_passwordConfirmField"
-      android:hint="Confirm Password"
-      android:password="true"
-      android:inputType="textPassword" />
-  <View style="@style/AccountActivity_Space"/>
-  <!--Register Button-->
-  <Button
-      style="@style/AccountActivity_Button"
-      android:id="@+id/Register_registerButton"
-      android:text="Register"/>
+<!--Register Text-->
+    <TextView
+        style="@style/AccountActivity_Title"
+        android:text="Register" />
+    <View
+        style="@style/AccountActivity_Space" />
+<!--Username Input-->
+    <EditText
+        style="@style/AccountActivity_Input"
+        android:id="@+id/Register_usernameField"
+        android:hint="Username"
+        android:inputType="text"
+        android:drawableLeft="@drawable/ic_perm_identity_white_24dp"
+        android:drawablePadding="-24dp" />
+    <View
+        style="@style/AccountActivity_Space" />
+<!--Email Input-->
+    <EditText
+        style="@style/AccountActivity_Input"
+        android:id="@+id/Register_emailField"
+        android:hint="Email"
+        android:inputType="text"
+        android:drawableLeft="@drawable/ic_perm_identity_white_24dp"
+        android:drawablePadding="-24dp" />
+    <View
+        style="@style/AccountActivity_Space" />
+<!--Password Input-->
+    <EditText
+        style="@style/AccountActivity_Input"
+        android:id="@+id/Register_passwordField"
+        android:hint="Password"
+        android:password="true"
+        android:inputType="textPassword"
+        android:drawableLeft="@drawable/ic_lock_outline_white_24dp"
+        android:drawablePadding="-24dp" />
+    <View
+        style="@style/AccountActivity_Space" />
+<!--Password Confirm Input-->
+    <EditText
+        style="@style/AccountActivity_Input"
+        android:id="@+id/Register_passwordConfirmField"
+        android:hint="Confirm Password"
+        android:password="true"
+        android:inputType="textPassword"
+        android:drawableLeft="@drawable/ic_lock_outline_white_24dp"
+        android:drawablePadding="-24dp" />
+    <View
+        style="@style/AccountActivity_Space" />
+<!--Register Button-->
+    <Button
+        style="@style/AccountActivity_Button"
+        android:id="@+id/Register_registerButton"
+        android:text="Register" />
 </LinearLayout>
