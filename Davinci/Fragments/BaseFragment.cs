@@ -21,6 +21,11 @@ namespace Davinci.Fragments
             return base.OnCreateView(inflater, container, savedInstanceState);
         }
 
+        protected void RunOnUIThread(System.Action action)
+        {
+            parentActivity.RunOnUiThread(action);
+        }
+
         protected void Close()
         {
             parentActivity.OnBackPressed();

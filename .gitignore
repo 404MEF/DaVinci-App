@@ -242,4 +242,5 @@ ModelManifest.xml
 .fake/
 
 # Test Project
-Test/
+ApiTest/
+ProcessButton/

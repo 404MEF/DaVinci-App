@@ -3,6 +3,9 @@
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using Android.Preferences;
+using Android.App;
+using Android.Content;
 
 using Davinci.Api;
 
@@ -11,48 +14,81 @@ namespace Davinci.Fragments.Account
     class LoginFragment : BaseFragment
     {
         EditText usernameField, passwordField;
+        Button loginBtn, registerBtn, resetBtn;
+        CheckBox rememberBox;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            return inflater.Inflate(Resource.Layout.LoginFragment, container, false);
+            return inflater.Inflate(Resource.Layout.Account_LoginFragment, container, false);
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             usernameField = view.FindViewById<EditText>(Resource.Id.Login_usernameField);
             passwordField = view.FindViewById<EditText>(Resource.Id.Login_passwordField);
+            rememberBox = view.FindViewById<CheckBox>(Resource.Id.Login_rememberChk);
 
-            Button loginButton = view.FindViewById<Button>(Resource.Id.Login_loginButton);
-            Button registerBtn = view.FindViewById<Button>(Resource.Id.Login_registerButton);
-            Button resetBtn = view.FindViewById<Button>(Resource.Id.Login_forgetButton);
+            loginBtn = view.FindViewById<Button>(Resource.Id.Login_loginButton);
+            registerBtn = view.FindViewById<Button>(Resource.Id.Login_registerButton);
+            resetBtn = view.FindViewById<Button>(Resource.Id.Login_forgetButton);
 
+            var prefs = PreferenceManager.GetDefaultSharedPreferences(Application.Context);
+            var username = prefs.GetString(GetString(Resource.String.username), string.Empty);
+            usernameField.Text = username;
 
-            loginButton.Click += (s, e) => Authenticate();
+            loginBtn.Click += (s, e) => Authenticate();
             registerBtn.Click += (s, e) => Register();
             resetBtn.Click += (s, e) => ResetPassword();
         }
 
-        private async void Authenticate()
+        private void Authenticate()
         {
             bool isValid = validateInput();
 
             if (!isValid)
                 return;
 
-            //parentActivity.Window.AddFlags(WindowManagerFlags.NotTouchable);
+            toggleUiInput();
+            loginBtn.Text = "Authenticating...";
 
-            var response = await DavinciApi.Authenticate(usernameField.Text, passwordField.Text);
+            Task.Run(async () =>
+            {
+                return await DavinciApi.Authenticate(usernameField.Text, passwordField.Text);
+            }).ContinueWith(async responseTask =>
+            {
+                var response = responseTask.Result;
 
-            if (response.isOK)
-            {
-                //Switch to main feed
-                Infobar.Show(this.Context, this.View, response.message, Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal);
-            }
-            else
-            {
-                //parentActivity.RunOnUiThread(() => parentActivity.Window.ClearFlags(WindowManagerFlags.NotTouchable));
-                Infobar.Show(this.Context, this.View, response.message, Infobar.InfoLevel.Error, GravityFlags.Top | GravityFlags.FillHorizontal);
-            }
+                if (response.OK)
+                {
+                    saveCredentials(rememberBox.Checked);
+
+                    toggleUiInput();
+
+                    Infobar.Show(this.Context, response.message, Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal);
+
+                    await Task.Delay(500);
+
+                    Feed();
+                }
+                else
+                {
+                    toggleUiInput();
+                    loginBtn.Text = "Login";
+
+                    Infobar.Show(this.Context, response.message, Infobar.InfoLevel.Error, GravityFlags.Top | GravityFlags.FillHorizontal);
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void toggleUiInput()
+        {
+            var state = !loginBtn.Enabled;
+            loginBtn.Enabled = state;
+            registerBtn.Enabled = state;
+            resetBtn.Enabled = state;
+            usernameField.Enabled = state;
+            passwordField.Enabled = state;
+            rememberBox.Enabled = state;
         }
 
         private bool validateInput()
@@ -76,6 +112,17 @@ namespace Davinci.Fragments.Account
             return true;
         }
 
+        private void saveCredentials(bool savePassword)
+        {
+            var prefs = PreferenceManager.GetDefaultSharedPreferences(Application.Context);
+            var prefsEdit = prefs.Edit();
+            prefsEdit.PutString(GetString(Resource.String.username), usernameField.Text);
+            if (savePassword)
+                prefsEdit.PutString(GetString(Resource.String.userpassword), passwordField.Text);
+
+            prefsEdit.Apply();
+        }
+
         private void Register()
         {
             parentActivity.ShowFragment(new RegisterFragment());
@@ -85,6 +132,12 @@ namespace Davinci.Fragments.Account
         {
             parentActivity.ShowFragment(new ResetPasswordFragment());
 
+        }
+
+        private void Feed()
+        {
+            StartActivity(new Intent(Application.Context, typeof(FeedActivity)));
+            this.Close();
         }
     }
 }

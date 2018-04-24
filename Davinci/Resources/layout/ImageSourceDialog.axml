@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp"
+    android:layout_height="280dp"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/Feed_roundDialog"
+    style="@style/DavinciTheme.Dialog"
+    android:padding="48dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Choose an image source"
+        android:textSize="16dp"
+        android:textColor="@color/White"
+        fontPath="fonts/KalamRegular.ttf" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/White" />
+    <Button
+        android:id="@+id/ImageSourceDialog_takePhotoBtn"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical|left"
+        android:text="Take a photo"
+        android:textSize="12dp"
+        fontPath="fonts/KalamRegular.ttf"
+        android:background="@drawable/abc_btn_borderless_material"
+        android:drawableLeft="@drawable/ic_camera_alt_white_18dp"
+        android:drawablePadding="8dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/White" />
+    <Button
+        android:id="@+id/ImageSourceDialog_openGalleryBtn"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical|left"
+        android:text="Upload from gallery"
+        fontPath="fonts/KalamRegular.ttf"
+        android:textSize="12dp"
+        android:background="@drawable/abc_btn_borderless_material"
+        android:drawableLeft="@drawable/ic_collections_white_18dp"
+        android:drawablePadding="8dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/White" />
+    <Button
+        android:id="@+id/ImageSourceDialog_cancelBtn"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:text="Cancel"
+        android:textSize="12dp"
+        android:background="@drawable/abc_btn_borderless_material" />
+</LinearLayout>

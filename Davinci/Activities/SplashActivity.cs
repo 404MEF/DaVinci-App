@@ -5,6 +5,7 @@ using Android.OS;
 using Android.Content;
 using Android.Support.V7.App;
 using Android.Net;
+using Android.Preferences;
 
 namespace Davinci
 {
@@ -21,13 +22,38 @@ namespace Davinci
         protected override void OnResume()
         {
             base.OnResume();
-            Task.Run(() => { SimulateStartup(); });
+            start();
         }
 
-        async void SimulateStartup()
+        void start()
         {
-            await Task.Delay(1000);
-            StartActivity(new Intent(Application.Context, typeof(AccountActivity)));
+            var prefs = PreferenceManager.GetDefaultSharedPreferences(Application.Context);
+            var username = prefs.GetString(GetString(Resource.String.username), string.Empty);
+            var userpassword = prefs.GetString(GetString(Resource.String.userpassword), string.Empty);
+
+            prefs.Dispose();
+
+            if (string.IsNullOrEmpty(userpassword))
+            {
+                StartActivity(new Intent(Application.Context, typeof(AccountActivity)));
+                this.Finish();
+            }
+            else
+            {
+                Task.Run(async () =>
+                {
+                    var auth = await Api.DavinciApi.Authenticate(username, userpassword);
+                    return auth;
+                }).ContinueWith(authTask =>
+                {
+                    var auth = authTask.Result;
+
+                    if (auth.OK)
+                        StartActivity(new Intent(Application.Context, typeof(FeedActivity)));
+                    else
+                        StartActivity(new Intent(Application.Context, typeof(AccountActivity)));
+                },TaskScheduler.FromCurrentSynchronizationContext());
+            }
         }
     }
 }

@@ -5,24 +5,34 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Davinci", "Davinci\Davinci.csproj", "{D02075D2-FED7-49DB-A103-70FCA9CC6E8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{92F4899B-2C57-457B-B111-76C6CBD34153}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessButton", "..\xamarin-android-samples-master\ProcessButton\Library\ProcessButton.csproj", "{906A14F9-5720-44EE-8B44-A0412F870C09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTest", "ApiTest\ApiTest.csproj", "{E66ED9EC-0128-4974-B601-DE989F88192B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		ApiTest|Any CPU = ApiTest|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D02075D2-FED7-49DB-A103-70FCA9CC6E8F}.ApiTest|Any CPU.ActiveCfg = Debug|Any CPU
 		{D02075D2-FED7-49DB-A103-70FCA9CC6E8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D02075D2-FED7-49DB-A103-70FCA9CC6E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D02075D2-FED7-49DB-A103-70FCA9CC6E8F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{D02075D2-FED7-49DB-A103-70FCA9CC6E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D02075D2-FED7-49DB-A103-70FCA9CC6E8F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D02075D2-FED7-49DB-A103-70FCA9CC6E8F}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{92F4899B-2C57-457B-B111-76C6CBD34153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{92F4899B-2C57-457B-B111-76C6CBD34153}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{92F4899B-2C57-457B-B111-76C6CBD34153}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{92F4899B-2C57-457B-B111-76C6CBD34153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{906A14F9-5720-44EE-8B44-A0412F870C09}.ApiTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{906A14F9-5720-44EE-8B44-A0412F870C09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{906A14F9-5720-44EE-8B44-A0412F870C09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{906A14F9-5720-44EE-8B44-A0412F870C09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{906A14F9-5720-44EE-8B44-A0412F870C09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E66ED9EC-0128-4974-B601-DE989F88192B}.ApiTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{E66ED9EC-0128-4974-B601-DE989F88192B}.ApiTest|Any CPU.Build.0 = Debug|Any CPU
+		{E66ED9EC-0128-4974-B601-DE989F88192B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E66ED9EC-0128-4974-B601-DE989F88192B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E66ED9EC-0128-4974-B601-DE989F88192B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

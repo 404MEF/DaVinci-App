@@ -5,7 +5,7 @@
         public string result { get; set; }
         public string message { get; set; }
 
-        public bool isOK
+        public bool OK
         {
             get
             {

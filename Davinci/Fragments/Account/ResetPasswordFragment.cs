@@ -15,7 +15,7 @@ namespace Davinci.Fragments.Account
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            return inflater.Inflate(Resource.Layout.ResetPasswordFragment, container, false);
+            return inflater.Inflate(Resource.Layout.Account_ResetPasswordFragment, container, false);
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)

@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!--Main Themes-->
-  <style name="DavinciTheme" parent="Theme.AppCompat">
-    <item name="windowNoTitle">true</item>
-    <item name="windowActionBar">false</item>
+  <style name="DavinciTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/primaryColor</item>
+    <item name="colorPrimaryDark">@color/primaryDarkColor</item>
   </style>
 
-  <style name="DavinciTheme.Splash" parent ="Theme.AppCompat.NoActionBar">
+  <style name="DavinciTheme.Splash" parent ="DavinciTheme">
     <item name="android:windowBackground">@drawable/SplashDrawable</item>
     <item name="android:windowFullscreen">true</item>
   </style>
 
   <style name="DavinciTheme.Login" parent="Theme.AppCompat.NoActionBar">
-    <item name="windowNoTitle">true</item>
-    <item name="windowActionBar">false</item>
+    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
   </style>
 
-  <style name="DavinciTheme.Feed" parent="Theme.AppCompat.NoActionBar">
-    <item name="windowNoTitle">true</item>
-    <item name="windowActionBar">false</item>
+  <style name="DavinciTheme.Feed" parent="DavinciTheme">
   </style>
 
-  <style name="DavinciTheme.Settings" parent="Theme.AppCompat.NoActionBar">
-    <item name="windowNoTitle">true</item>
-    <item name="windowActionBar">false</item>
+  <style name="DavinciTheme.Settings" parent="DavinciTheme">
+    <item name="colorPrimary">@android:color/white</item>
+    <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+  </style>
+
+  <style name="DavinciTheme.Dialog" parent="Theme.AppCompat">
+    
   </style>
 
   <!--Account Activity-->
@@ -79,6 +81,15 @@
     <item name="android:gravity">center</item>
     <item name="android:textAllCaps">false</item>
     <item name="fontPath">fonts/KalamRegular.ttf</item>
+  </style>
+
+  <style name="AccountActivity_CheckBox">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginLeft">@dimen/AccountActivity_Button_Margin</item>
+    <item name="android:layout_marginRight">@dimen/AccountActivity_Button_Margin</item>
+    <item name="android:textSize">12dp</item>
+
   </style>
 
   <!--Feed Activity-->

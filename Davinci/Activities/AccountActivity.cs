@@ -11,9 +11,9 @@ namespace Davinci
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            Window.AddFlags(WindowManagerFlags.Fullscreen);
-
             base.OnCreate(savedInstanceState);
+
+            Window.SetFlags(WindowManagerFlags.LayoutNoLimits, WindowManagerFlags.LayoutNoLimits);
 
             SetContentView(Resource.Layout.AccountActivity);
 

@@ -13,11 +13,11 @@ namespace Davinci
             Error = 2
         }
 
-        public static void Show(Context context, View view, string text, InfoLevel infoLevel, GravityFlags gravity)
+        public static void Show(Context context, string text, InfoLevel infoLevel, GravityFlags gravity)
         {
             LayoutInflater inflater = context.GetSystemService(Context.LayoutInflaterService) as LayoutInflater;
 
-            View layout = inflater.Inflate(Resource.Layout.Infobar, view.FindViewById<ViewGroup>(Resource.Id.Infobar_root));
+            View layout = inflater.Inflate(Resource.Layout.Infobar,null);
 
             TextView textView = layout.FindViewById<TextView>(Resource.Id.Infobar_text);
             textView.Text = text;
@@ -40,7 +40,7 @@ namespace Davinci
             Toast toast = new Toast(context);
             toast.SetGravity(gravity, 0, 0);
             toast.View = layout;
-            toast.Duration = ToastLength.Long;
+            toast.Duration = ToastLength.Short;
             toast.Show();
         }
     }

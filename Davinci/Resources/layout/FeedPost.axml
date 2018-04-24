@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="4dp"
+    card_view:contentPadding="2dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+        <Davinci.Components.SquareImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/Image2" />
+        <Davinci.Components.RationBar
+            android:id="@+id/ratioBar"
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/imageView" />
+        <TextView
+            android:id="@+id/detailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#333333"
+            android:singleLine="true"
+            android:text="Caption"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/ratioBar" />
+        <TextView
+            android:id="@+id/categoryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="8dp"
+            android:textColor="@android:color/white"
+            android:singleLine="true"
+            android:text="#Nature"
+            android:layout_alignBottom="@id/imageView"
+            android:layout_alignRight="@id/imageView" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
