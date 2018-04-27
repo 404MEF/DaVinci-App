@@ -61,7 +61,7 @@ namespace Davinci.Components
         public void SetRatio(int progress)
         {
             ProgressBarAnimation anim = new ProgressBarAnimation(this, this.progressBar.Progress, progress);
-            anim.Duration = 2000;
+            anim.Duration = 1000;
             this.StartAnimation(anim);
         }
     }

@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\FeedActivity.cs" />
+    <Compile Include="Activities\UploadActivity.cs" />
     <Compile Include="Adapters\FeedPostAdapter.cs" />
     <Compile Include="Api\DavinciApi.cs" />
     <Compile Include="Api\Models\AuthenticationModel.cs" />
@@ -158,6 +159,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\FeedPost.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\UploadActivity.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

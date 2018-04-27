@@ -8,6 +8,7 @@ using Android.Graphics;
 
 using Davinci.Api.Models;
 using Davinci.Components;
+using System.Linq;
 
 namespace Davinci.Adapters
 {
@@ -34,8 +35,8 @@ namespace Davinci.Adapters
 
             var viewHolder = holder as FeedItemAdapterViewHolder;
 
-            viewHolder.Owner.Text = string.Format("Uploaded by {0} at {1}", item.owner,item.createdAt);
-            viewHolder.Category.Text = item.category;
+            viewHolder.Owner.Text = string.Format("Uploaded by {0} at {1}", item.owner.username,item.createdAt.Split('T')[0]);
+            viewHolder.Category.Text = "#" + item.category.name.First().ToString().ToUpper() + item.category.name.Substring(1);
 
             viewHolder.Ratio.CreateView();
             viewHolder.Ratio.SetRatio(item.LikeRatio);

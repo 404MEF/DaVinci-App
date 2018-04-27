@@ -7,7 +7,7 @@ using Android.Support.V7.App;
 using Android.Net;
 using Android.Preferences;
 
-namespace Davinci
+namespace Davinci.Activities
 {
     [Activity(Theme = "@style/DavinciTheme.Splash", MainLauncher = true, NoHistory = true)]
     public class SplashActivity : AppCompatActivity

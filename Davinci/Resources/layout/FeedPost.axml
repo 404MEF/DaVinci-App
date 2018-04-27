@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:src="@drawable/Image2" />
-        <Davinci.Components.RationBar
+        <Davinci.Components.LikeRatioBar
             android:id="@+id/ratioBar"
             android:layout_width="match_parent"
             android:layout_height="22dp"
@@ -40,12 +40,13 @@
             android:id="@+id/categoryText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginRight="8dp"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:singleLine="true"
-            android:text="#Nature"
+            android:text="# nature"
             android:layout_alignBottom="@id/imageView"
-            android:layout_alignRight="@id/imageView" />
+            android:layout_alignRight="@id/imageView"
+            android:background="@color/background_material_light"
+            android:paddingRight="8dp"
+            android:paddingBottom="4dp" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

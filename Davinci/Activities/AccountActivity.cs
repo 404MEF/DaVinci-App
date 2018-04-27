@@ -4,7 +4,7 @@ using Android.Views;
 
 using Davinci.Fragments.Account;
 
-namespace Davinci
+namespace Davinci.Activities
 {
     [Activity(Theme = "@style/DavinciTheme.Login", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait, WindowSoftInputMode = SoftInput.AdjustPan, NoHistory = false)]
     public class AccountActivity : BaseActivity

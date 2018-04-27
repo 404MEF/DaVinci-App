@@ -5,11 +5,6 @@
     android:layout_height="match_parent">
     <include
         layout="@layout/ActionBar" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"
-        android:layout_below="@id/actionBar" />
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"

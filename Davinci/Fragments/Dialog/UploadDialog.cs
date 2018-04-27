@@ -9,7 +9,6 @@ using Android.Content;
 using Android.Provider;
 using Android.Graphics;
 
-using Davinci.Enums.Feed;
 using System.Threading.Tasks;
 using Xamarin.Media;
 
@@ -70,27 +69,27 @@ namespace Davinci.Fragments.Dialog
             //intent.PutExtra(MediaStore.ExtraOutput, Android.Net.Uri.FromFile(App._file));
             //StartActivityForResult(intent, (int)Request.Camera);
 
-            var picker = new MediaPicker(Context);
-            if (picker.IsCameraAvailable)
-            {
-                var intent = picker.GetTakePhotoUI(new StoreCameraMediaOptions
-                {
-                    Name = string.Format("photo-{0}.jpg", Guid.NewGuid()),
-                    Directory = "Davinci"
-                });
-                StartActivityForResult(intent, (int)Request.Camera);
-            }
-            this.Dismiss();
+            //var picker = new MediaPicker(Context);
+            //if (picker.IsCameraAvailable)
+            //{
+            //    var intent = picker.GetTakePhotoUI(new StoreCameraMediaOptions
+            //    {
+            //        Name = string.Format("photo-{0}.jpg", Guid.NewGuid()),
+            //        Directory = "Davinci"
+            //    });
+            //    StartActivityForResult(intent, (int)Request.Camera);
+            //}
+            //this.Dismiss();
         }
 
         private void Gallery()
         {
-            var picker = new MediaPicker(Context);
+            //var picker = new MediaPicker(Context);
 
-            var intent = picker.GetPickPhotoUI();
+            //var intent = picker.GetPickPhotoUI();
 
-            StartActivityForResult(intent, (int)Request.Gallery);
-            this.Dismiss();
+            //StartActivityForResult(intent, (int)Request.Gallery);
+            //this.Dismiss();
             //var intent = new Intent(Intent.ActionPick, MediaStore.Images.Media.ExternalContentUri);
             //intent.SetType("image/*");
             //StartActivityForResult(Intent.CreateChooser(intent, "Select Image"), (int)Request.Gallery);

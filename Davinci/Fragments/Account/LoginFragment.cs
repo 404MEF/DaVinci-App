@@ -8,6 +8,7 @@ using Android.App;
 using Android.Content;
 
 using Davinci.Api;
+using Davinci.Activities;
 
 namespace Davinci.Fragments.Account
 {
