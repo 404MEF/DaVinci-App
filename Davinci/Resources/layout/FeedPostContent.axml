@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="2px"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/categoryText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="32dp"
+        android:paddingLeft="18dp"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif-medium"
+        android:singleLine="true"
+        android:text="#Nature"
+        android:layout_gravity="center_vertical"
+        android:textStyle="bold"
+        android:gravity="center_vertical" />
+    <Davinci.Components.SquareImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/Image2"
+        android:layout_below="@id/categoryText"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="8dp" />
+    <LinearLayout
+        android:id="@+id/btnContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/imageView"
+        android:weightSum="4"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:minHeight="32dp"
+        android:layout_marginTop="8dp">
+        <Davinci.Components.LikeRatioBar
+            android:id="@+id/ratioBar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:layout_marginBottom="4dp" />
+        <Button
+            android:id="@+id/likeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="Like"
+            android:textSize="12sp"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:backgroundTint="#00000000"
+            android:drawableLeft="@drawable/PostLikeBtn"
+            android:gravity="center_vertical"
+            android:drawablePadding="16dp" />
+        <Button
+            android:id="@+id/dislikeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="Dislike"
+            android:textSize="12sp"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:backgroundTint="#00000000"
+            android:drawableLeft="@drawable/PostDislikeBtn"
+            android:gravity="center_vertical"
+            android:foregroundTint="#00000000"
+            android:drawablePadding="16dp" />
+        <TextView
+            android:id="@+id/detailText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:singleLine="true"
+            android:layout_weight="0.5"
+            android:text="Uploaded by Davinci at 2018"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textAllCaps="false"
+            android:paddingTop="4dp"
+            android:paddingBottom="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="12sp" />
+    </LinearLayout>
+    <TextView
+        android:text="Tap to show in fullscreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:layout_alignBottom="@id/imageView"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_marginBottom="2dp"
+        android:textColor="@android:color/white" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/categoryText"
+        android:id="@+id/view1"
+        android:background="@color/lightGrey300" />
+</RelativeLayout>

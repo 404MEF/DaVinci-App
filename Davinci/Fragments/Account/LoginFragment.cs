@@ -38,8 +38,9 @@ namespace Davinci.Fragments.Account
             usernameField.Text = username;
 
             loginBtn.Click += (s, e) => Authenticate();
-            registerBtn.Click += (s, e) => Register();
-            resetBtn.Click += (s, e) => ResetPassword();
+            registerBtn.Click += (s, e) => ((AccountActivity)parentActivity).Register();
+            resetBtn.Click += (s, e) => ((AccountActivity)parentActivity).Reset();
+            
         }
 
         private void Authenticate()
@@ -63,9 +64,7 @@ namespace Davinci.Fragments.Account
                 {
                     saveCredentials(rememberBox.Checked);
 
-                    toggleUiInput();
-
-                    Infobar.Show(this.Context, response.message, Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal);
+                    Infobar.Show(this.Context, response.message, Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal,false);
 
                     await Task.Delay(500);
 
@@ -76,7 +75,7 @@ namespace Davinci.Fragments.Account
                     toggleUiInput();
                     loginBtn.Text = "Login";
 
-                    Infobar.Show(this.Context, response.message, Infobar.InfoLevel.Error, GravityFlags.Top | GravityFlags.FillHorizontal);
+                    Infobar.Show(this.Context, response.message, Infobar.InfoLevel.Error, GravityFlags.Top | GravityFlags.FillHorizontal,false);
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
@@ -124,21 +123,10 @@ namespace Davinci.Fragments.Account
             prefsEdit.Apply();
         }
 
-        private void Register()
-        {
-            parentActivity.ShowFragment(new RegisterFragment());
-        }
-
-        private void ResetPassword()
-        {
-            parentActivity.ShowFragment(new ResetPasswordFragment());
-
-        }
-
         private void Feed()
         {
             StartActivity(new Intent(Application.Context, typeof(FeedActivity)));
-            this.Close();
+            parentActivity.Finish();
         }
     }
 }

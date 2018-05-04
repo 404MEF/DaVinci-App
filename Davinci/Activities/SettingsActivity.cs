@@ -4,23 +4,19 @@ using Android.OS;
 using Android.Preferences;
 using Android.Views;
 using Android.Widget;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace Davinci.Activities
 {
     [Activity(Theme = "@style/DavinciTheme.Settings", WindowSoftInputMode = SoftInput.AdjustPan)]
-    public class SettingsActivity : BaseActivity
+    public class SettingsActivity : ToolbarActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            SetContentView(Resource.Layout.SettingsActivity);
+            SetContentView(Resource.Layout.Settings);
 
-            Toolbar toolBar = FindViewById<Toolbar>(Resource.Id.actionBar);
-            toolBar.FindViewById<TextView>(Resource.Id.actionBar_title).Text = "Settings";
-            SetSupportActionBar(toolBar);
-            SupportActionBar.SetDisplayShowTitleEnabled(false);
+            SetActionBar("Setings");
 
             Button logoutBtn = FindViewById<Button>(Resource.Id.Settings_logoutButton);
 
@@ -30,7 +26,6 @@ namespace Davinci.Activities
         private void Logout()
         {
             var prefsEdit = PreferenceManager.GetDefaultSharedPreferences(Application.Context).Edit();
-            prefsEdit.Remove(GetString(Resource.String.username));
             prefsEdit.Remove(GetString(Resource.String.userpassword));
             prefsEdit.Apply();
             prefsEdit.Dispose();

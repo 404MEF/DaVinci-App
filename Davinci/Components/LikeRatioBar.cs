@@ -20,13 +20,13 @@ namespace Davinci.Components
 
         public LikeRatioBar(Context context) : base(context)
         {
-           // CreateView(context);
+           createView();
         }
 
         public LikeRatioBar(Context context, IAttributeSet attrs) : base(context, attrs)
         {
             this.mContext = context;
-            //CreateView(context);
+            createView();
 
         }
 
@@ -34,7 +34,7 @@ namespace Davinci.Components
         {
             this.mContext = context;
 
-            //CreateView(context);
+            createView();
 
         }
 
@@ -42,12 +42,11 @@ namespace Davinci.Components
         {
             this.mContext = context;
 
-            //CreateView(context);
+            createView();
 
         }
 
-
-        public void CreateView()
+        private void createView()
         {
             LayoutInflater inflater = (LayoutInflater)mContext.GetSystemService(Context.LayoutInflaterService);
 
@@ -60,9 +59,12 @@ namespace Davinci.Components
 
         public void SetRatio(int progress)
         {
-            ProgressBarAnimation anim = new ProgressBarAnimation(this, this.progressBar.Progress, progress);
-            anim.Duration = 1000;
-            this.StartAnimation(anim);
+            //ProgressBarAnimation anim = new ProgressBarAnimation(this, this.progressBar.Progress, progress);
+            //anim.Duration = 1000;
+            this.progressBar.Progress = progress;
+            this.primaryTextView.Text = string.Format("%{0}", progress);
+            this.secondaryTextView.Text = string.Format("%{0}", 100 - progress);
+            //this.StartAnimation(anim);
         }
     }
 

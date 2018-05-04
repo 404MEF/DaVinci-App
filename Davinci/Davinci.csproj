@@ -24,6 +24,11 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <AndroidKeyStore>true</AndroidKeyStore>
+    <AndroidSigningKeyStore>C:\Users\berka\Desktop\my-release-key.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>bers1996</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>bers</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>bers224488</AndroidSigningKeyPass>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -33,9 +38,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
+    <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
-    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
     <AndroidEnableSGenConcurrent>false</AndroidEnableSGenConcurrent>
     <AndroidSupportedAbis />
     <AotAssemblies>false</AotAssemblies>
@@ -44,7 +49,7 @@
     <Debugger>Xamarin</Debugger>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>True</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>PdbOnly</DebugType>
     <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -54,16 +59,33 @@
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
-    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
+    <AndroidSupportedAbis>armeabi;armeabi-v7a;x86;x86_64;arm64-v8a</AndroidSupportedAbis>
+    <Debugger>Xamarin</Debugger>
+    <JavaMaximumHeapSize>1g</JavaMaximumHeapSize>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Calligraphy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CallygraphyXamarin.2.3.0\lib\MonoAndroid\Calligraphy.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Java.Interop" />
+    <Reference Include="HockeySDK, Version=5.0.6585.25315, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HockeySDK.Xamarin.5.1.2\lib\MonoAndroid403\HockeySDK.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HockeySDK.AndroidBindings, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HockeySDK.Xamarin.5.1.2\lib\MonoAndroid403\HockeySDK.AndroidBindings.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RecyclerViewAnimators, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RecyclerViewAnimators.2.1.0.0\lib\MonoAndroid403\RecyclerViewAnimators.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
@@ -71,9 +93,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
+    <Reference Include="System.Xml" />
     <Reference Include="Xamarin.Android.Support.Animated.Vector.Drawable, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Android.Support.Animated.Vector.Drawable.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.Animated.Vector.Drawable.dll</HintPath>
       <Private>True</Private>
@@ -94,6 +116,10 @@
       <HintPath>..\packages\Xamarin.Android.Support.v7.CardView.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.v7.CardView.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.GridLayout, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.GridLayout.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.v7.GridLayout.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Xamarin.Android.Support.v7.RecyclerView, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Android.Support.v7.RecyclerView.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.v7.RecyclerView.dll</HintPath>
       <Private>True</Private>
@@ -108,14 +134,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\FeedActivity.cs" />
+    <Compile Include="Activities\ToolbarActivity.cs" />
     <Compile Include="Activities\UploadActivity.cs" />
-    <Compile Include="Adapters\FeedPostAdapter.cs" />
+    <Compile Include="Adapters\Category\CategoryGridAdapter.cs" />
+    <Compile Include="Adapters\Feed\FeedPostAdapter.cs" />
+    <Compile Include="Adapters\Search\CategoryAdapter.cs" />
+    <Compile Include="Adapters\Search\ImageGridAdapter.cs" />
+    <Compile Include="Animations\FeedPostAnimator.cs" />
+    <Compile Include="Animations\ItemAnimator.cs" />
     <Compile Include="Api\DavinciApi.cs" />
     <Compile Include="Api\Models\AuthenticationModel.cs" />
     <Compile Include="Api\Models\BaseApiModel.cs" />
+    <Compile Include="Api\Models\CategoryCollectionModel.cs" />
+    <Compile Include="Api\Models\FeedModel.cs" />
+    <Compile Include="Api\Models\SingleCategoryModel.cs" />
+    <Compile Include="Api\Models\CategoryModel.cs" />
     <Compile Include="Api\Models\PostCollectionModel.cs" />
     <Compile Include="Api\Models\PostModel.cs" />
+    <Compile Include="Api\Models\SearchSuggestionModel.cs" />
+    <Compile Include="Api\Models\SinglePostModel.cs" />
+    <Compile Include="Api\Models\FollowModel.cs" />
+    <Compile Include="Api\Models\VoteModel.cs" />
+    <Compile Include="AutoCrashManagerListener.cs" />
     <Compile Include="Components\LikeRatioBar.cs" />
+    <Compile Include="Components\SquareImageButton.cs" />
     <Compile Include="Components\SquareImageView.cs" />
     <Compile Include="Enums\Feed\Enum.cs" />
     <Compile Include="Fragments\Account\ResetPasswordFragment.cs" />
@@ -124,9 +166,10 @@
     <Compile Include="Activities\BaseActivity.cs" />
     <Compile Include="Fragments\BaseFragment.cs" />
     <Compile Include="Activities\AccountActivity.cs" />
-    <Compile Include="Fragments\Dialog\UploadDialog.cs" />
+    <Compile Include="Fragments\Feed\PostFragment.cs" />
+    <Compile Include="Activities\CategoryActivity.cs" />
+    <Compile Include="Fragments\Feed\UploadFragment.cs" />
     <Compile Include="Fragments\Feed\SearchFragment.cs" />
-    <Compile Include="Fragments\Feed\SettingsFragment.cs" />
     <Compile Include="Fragments\Feed\FeedFragment.cs" />
     <Compile Include="HelperFunctions.cs" />
     <Compile Include="Infobar.cs" />
@@ -142,14 +185,16 @@
     <None Include="Properties\AndroidManifest.xml" />
     <AndroidAsset Include="Assets\fonts\KalamBold.ttf" />
     <AndroidAsset Include="Assets\fonts\KalamRegular.ttf" />
+    <AndroidResource Include="Resources\drawable\PostDislikeBtn.xml" />
+    <AndroidResource Include="Resources\drawable\PostLikeBtn.xml" />
     <AndroidResource Include="Resources\layout\Account_LoginFragment.axml" />
-    <AndroidResource Include="Resources\layout\AccountActivity.axml" />
+    <AndroidResource Include="Resources\layout\Account.axml" />
     <AndroidResource Include="Resources\layout\Account_ResetPasswordFragment.axml" />
     <AndroidResource Include="Resources\layout\Account_RegisterFragment.axml" />
-    <AndroidResource Include="Resources\layout\FeedActivity.axml">
+    <AndroidResource Include="Resources\layout\Feed.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\SettingsActivity.axml">
+    <AndroidResource Include="Resources\layout\Settings.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\FeedFragment.axml">
@@ -161,7 +206,31 @@
     <AndroidResource Include="Resources\layout\FeedPost.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\UploadActivity.axml">
+    <AndroidResource Include="Resources\layout\Upload.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SearchFragment.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SearchPost.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Search_dropdownItem.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\CategoryFragment.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\FeedPostContent.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\CategoryGridItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\PostFragment.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\FeedFragmentContent.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -169,11 +238,7 @@
     <AndroidResource Include="Resources\values\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\mipmap-hdpi\" />
-    <Folder Include="Resources\mipmap-mdpi\" />
-    <Folder Include="Resources\mipmap-xhdpi\" />
-    <Folder Include="Resources\mipmap-xxhdpi\" />
-    <Folder Include="Resources\mipmap-xxxhdpi\" />
+    <Folder Include="Fragments\Dialog\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\style.xml">
@@ -198,9 +263,6 @@
     <AndroidResource Include="Resources\drawable\Login_RoundedButton.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\LoginBackgroundImage.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Image2.jpg" />
@@ -320,40 +382,12 @@
     <AndroidResource Include="Resources\drawable\HorizontalDivider.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\ActionBar.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\ImageSourceDialog.axml" />
+    <AndroidResource Include="Resources\layout\actionBar.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_chevron_right_black_24dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\ic_add_a_photo_white_24dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\ic_camera_alt_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\ic_collections_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-mdpi\ic_add_a_photo_white_24dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-mdpi\ic_camera_alt_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-mdpi\ic_collections_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xhdpi\ic_add_a_photo_white_24dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xhdpi\ic_camera_alt_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xhdpi\ic_collections_white_18dp.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xhdpi\ic_search_white_18dp.png" />
@@ -365,36 +399,10 @@
     <AndroidResource Include="Resources\drawable-hdpi\ic_search_white_18dp.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_camera_alt_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_add_a_photo_white_24dp.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_search_white_18dp.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxhdpi\ic_collections_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxhdpi\ic_camera_alt_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxhdpi\ic_add_a_photo_white_24dp.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_search_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_collections_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Feed_uploadButton.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\menu\feed.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_settings_white_18dp.png" />
@@ -415,19 +423,10 @@
     <AndroidResource Include="Resources\drawable\Feed_roundDialog.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Feed_searchButton.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Feed_settingsButton.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\values\attrs.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\RatioBar.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\FeedPostThumb.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_mail_outline_white_24dp.png" />
@@ -443,6 +442,98 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_mail_outline_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\loginbackgroundimage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\loginbackgroundimage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\loginbackgroundimage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\loginbackgroundimage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\loginbackgroundimage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\TransparentBorderButton.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\FeedSearchBtn.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\FeedUploadBtn.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\FeedSettingsBtn.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_add_a_photo_white_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_add_a_photo_white_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_add_a_photo_white_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_add_a_photo_white_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_add_a_photo_white_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_thumb_up_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_thumb_down_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_thumb_up_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_thumb_down_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_thumb_down_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_thumb_up_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_thumb_up_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_thumb_down_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_thumb_up_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_thumb_down_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\CategoryFollowBtn.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

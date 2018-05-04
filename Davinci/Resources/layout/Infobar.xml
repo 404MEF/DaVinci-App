@@ -3,6 +3,7 @@
     android:id="@+id/Infobar_root"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="?android:attr/actionBarSize"
     android:background="#ffffff"
     android:padding="5dp" >
   <TextView

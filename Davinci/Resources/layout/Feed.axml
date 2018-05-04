@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        layout="@layout/ActionBar" />
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionBar"
+        android:layout_above="@+id/Feed_bottomnavigation" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        android:layout_above="@id/Feed_bottomnavigation" />
+    <LinearLayout
+        android:id="@id/Feed_bottomnavigation"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:elevation="4dp"
+        android:background="@color/primaryColor"
+        android:orientation="horizontal"
+        android:weightSum="3">
+        <Button
+            android:id="@+id/Feed_searchBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:text="Search"
+            android:drawableTop="@drawable/FeedSearchBtn"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:paddingTop="5dp"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+        <Button
+            android:id="@+id/Feed_uploadButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:text="Upload"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:drawableTop="@drawable/FeedUploadBtn"
+            android:paddingTop="5dp"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/Feed_settingsButton"
+            android:text="Settings"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:paddingTop="5dp"
+            android:drawableTop="@drawable/FeedSettingsBtn"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</RelativeLayout>

@@ -11,30 +11,29 @@ using Android.Widget;
 using Android.Graphics;
 using Android.Util;
 using Android.Graphics.Drawables;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 using Xamarin.Media;
 
 namespace Davinci.Activities
 {
-    [Activity(Theme = "@style/DavinciTheme.Feed", WindowSoftInputMode = SoftInput.AdjustPan)]
-    class UploadActivity : BaseActivity
+    [Activity(Theme = "@style/DavinciTheme.Feed", WindowSoftInputMode = SoftInput.AdjustPan, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    class UploadActivity : ToolbarActivity
     {
         Button takeBtn, chooseBtn, clearBtn, uploadBtn;
         EditText categoryField;
         ImageView imageView;
         TextView imageText;
 
+        Bitmap bitmap;
+
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            SetContentView(Resource.Layout.UploadActivity);
+            SetContentView(Resource.Layout.Upload);
 
-            Toolbar toolBar = FindViewById<Toolbar>(Resource.Id.actionBar);
-            toolBar.FindViewById<TextView>(Resource.Id.actionBar_title).Text = "Upload new image";
-            SetSupportActionBar(toolBar);
-            SupportActionBar.SetDisplayShowTitleEnabled(false);
+            SetActionBar("Upload");
 
             takeBtn = FindViewById<Button>(Resource.Id.Upload_takeBtn);
             chooseBtn = FindViewById<Button>(Resource.Id.Upload_chooseBtn);
@@ -84,9 +83,9 @@ namespace Davinci.Activities
                 var intent = picker.GetTakePhotoUI(new StoreCameraMediaOptions
                 {
                     Name = string.Format("photo-{0}.jpg", Guid.NewGuid()),
-                    Directory = "Davinci"
+                    Directory = "Davinci",
                 });
-                StartActivityForResult(intent, 99);
+                StartActivityForResult(intent, 1);
             }
         }
 
@@ -96,7 +95,7 @@ namespace Davinci.Activities
 
             var intent = picker.GetPickPhotoUI();
 
-            StartActivityForResult(intent, 99);
+            StartActivityForResult(intent, 1);
         }
 
         private void uploadImage()
@@ -108,14 +107,14 @@ namespace Davinci.Activities
                 Infobar.Show(this, "No image to upload", Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal);
                 return;
             }
-            var bitmap = (imageView.Drawable as BitmapDrawable).Bitmap;
+            var bm = (imageView.Drawable as BitmapDrawable).Bitmap;
 
 
             Task.Run(async () =>
             {
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    await bitmap.CompressAsync(Bitmap.CompressFormat.Jpeg, 50, memoryStream);
+                    await bm.CompressAsync(Bitmap.CompressFormat.Jpeg, 80, memoryStream);
 
                     var base64Image = Base64.EncodeToString(memoryStream.ToArray(), Base64Flags.Default);
 
@@ -142,12 +141,36 @@ namespace Davinci.Activities
 
                 using (var mediaStream = mediaFile.GetStream())
                 {
-                    var bitmap = await BitmapFactory.DecodeStreamAsync(mediaStream);
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.InJustDecodeBounds = true;
+
+                    int height = options.OutHeight;
+                    int width = options.OutWidth;
+
+                    int sampleSize = 1;
+                    if (height > 256 || width > 256)
+                    {
+                        int heightRatio = (int)Math.Round((float)height / (float)256);
+                        int widthRatio = (int)Math.Round((float)width / (float)256);
+                        sampleSize = Math.Min(heightRatio, widthRatio);
+                    }
+
+                    options = new BitmapFactory.Options();
+                    options.InSampleSize = sampleSize;
+
+                    var bitmap = await BitmapFactory.DecodeStreamAsync(mediaStream, null, options);
 
                     RunOnUiThread(() =>
                     {
-                        imageView.SetImageBitmap(bitmap);
                         imageUploadedUI();
+
+                        imageView.SetImageBitmap(null);
+                        if (this.bitmap != null)
+                            this.bitmap.Dispose();
+                        this.bitmap = null;
+                        this.bitmap = bitmap;
+
+                        imageView.SetImageBitmap(bitmap);
                     });
                 }
             });

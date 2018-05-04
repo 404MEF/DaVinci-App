@@ -4,19 +4,19 @@ using Android.App;
 using Android.OS;
 using Android.Content;
 using Android.Support.V7.App;
-using Android.Net;
 using Android.Preferences;
+using HockeyApp.Android;
 
 namespace Davinci.Activities
 {
     [Activity(Theme = "@style/DavinciTheme.Splash", MainLauncher = true, NoHistory = true)]
     public class SplashActivity : AppCompatActivity
     {
-        private const bool EMULATOR = false;
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            CrashManager.Register(this, "0e2e9be8322c5ab929e41d776bd6d1d5", new AutoCrashManagerListener() { });
         }
 
         protected override void OnResume()

@@ -1,8 +1,9 @@
-﻿namespace Davinci.Enums.Upload
+﻿namespace Davinci.Enums
 {
-    public enum Request
+    public enum FragmentContext
     {
-        Camera = 0,
-        Gallery
+        Feed = 0,
+        Search,
+        Upload
     }
 }

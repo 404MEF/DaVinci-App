@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    <include
+        layout="@layout/ActionBar" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="42dp">
+        <TextView
+            style="@style/SettingsActivity_CategoryLabel"
+            android:text="Image" />
+        <View
+            style="@style/SettingsActivity_CategoryDivider" />
+        <TextView
+            android:id="@+id/Upload_imageText"
+            style="@style/SettingsActivity_SubLabel"
+            android:text="No image specified"
+            android:visibility="visible" />
+        <ImageView
+            android:id="@+id/Upload_imageView"
+            android:layout_width="280dp"
+            android:layout_height="210dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:scaleType="centerInside"
+            android:layout_marginBottom="4dp"
+            android:visibility="visible"
+            android:layout_gravity="center_horizontal" />
+        <Button
+            android:id="@+id/Upload_clearBtn"
+            style="@style/SettingsActivity_SettingButton"
+            android:text="Clear photo"
+            android:visibility="gone" />
+        <Button
+            android:id="@+id/Upload_takeBtn"
+            style="@style/SettingsActivity_SettingButton"
+            android:text="Take a photo" />
+        <Button
+            android:id="@+id/Upload_chooseBtn"
+            style="@style/SettingsActivity_SettingButton"
+            android:text="Choose from gallery" />
+        <TextView
+            style="@style/SettingsActivity_CategoryLabel"
+            android:text="Category" />
+        <View
+            style="@style/SettingsActivity_CategoryDivider" />
+        <EditText
+            android:id="@+id/Upload_catField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Category Name"
+            android:textSize="12dp" />
+        <Button
+            android:id="@+id/Upload_uploadBtn"
+            style="@style/SettingsActivity_SettingButton"
+            android:text="Upload image" />
+    </LinearLayout>
+</FrameLayout>

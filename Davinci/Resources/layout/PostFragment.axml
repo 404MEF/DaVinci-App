@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="Uploader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/usernameField"
+        android:textSize="14sp"
+        android:paddingLeft="16dp"
+        android:minHeight="32dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="4dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/view1"
+        android:background="@color/lightGrey300" />
+    <ImageView
+        android:src="@android:drawable/ic_menu_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView1"
+        android:minHeight="256dp" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/frameLayout1"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="4dp">
+        <Button
+            android:text="Like"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/button1"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/PostLikeBtn"
+            android:drawablePadding="8dp"
+            android:background="?android:selectableItemBackgroundBorderless" />
+        <Button
+            android:text="Dislike"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/button2"
+            android:layout_gravity="right"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/PostDislikeBtn"
+            android:drawablePadding="8dp"
+            android:background="?android:selectableItemBackgroundBorderless" />
+    </FrameLayout>
+</LinearLayout>

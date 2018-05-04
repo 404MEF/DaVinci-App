@@ -3,50 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    card_view:cardElevation="2dp"
-    card_view:cardUseCompatPadding="true"
-    card_view:cardCornerRadius="4dp"
-    card_view:contentPadding="2dp">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="12dp">
-        <Davinci.Components.SquareImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/Image2" />
-        <Davinci.Components.LikeRatioBar
-            android:id="@+id/ratioBar"
-            android:layout_width="match_parent"
-            android:layout_height="22dp"
-            android:layout_marginTop="8dp"
-            android:layout_below="@id/imageView" />
-        <TextView
-            android:id="@+id/detailText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#333333"
-            android:singleLine="true"
-            android:text="Caption"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_below="@id/ratioBar" />
-        <TextView
-            android:id="@+id/categoryText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:singleLine="true"
-            android:text="# nature"
-            android:layout_alignBottom="@id/imageView"
-            android:layout_alignRight="@id/imageView"
-            android:background="@color/background_material_light"
-            android:paddingRight="8dp"
-            android:paddingBottom="4dp" />
-    </RelativeLayout>
+    android:layout_marginBottom="8dp"
+    card_view:cardElevation="4dp"
+    card_view:cardCornerRadius="4dp">
+    <include
+        layout="@layout/FeedPostContent" />
 </android.support.v7.widget.CardView>

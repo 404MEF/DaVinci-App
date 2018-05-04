@@ -1,40 +1,74 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
 
+using Davinci.Fragments;
 using Davinci.Fragments.Feed;
 
 namespace Davinci.Activities
 {
-    [Activity(Theme = "@style/DavinciTheme.Feed", WindowSoftInputMode = SoftInput.AdjustPan, NoHistory = false)]
-    public class FeedActivity : BaseActivity
+    [Activity(Theme = "@style/DavinciTheme.Feed", WindowSoftInputMode = SoftInput.AdjustPan, NoHistory = false,ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    public class FeedActivity : ToolbarActivity
     {
+        private BaseFragment feedFragment, searchFragment;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            SetContentView(Resource.Layout.FeedActivity);
+            SetContentView(Resource.Layout.Feed);
 
-            Toolbar toolBar = FindViewById<Toolbar>(Resource.Id.actionBar);
-            toolBar.FindViewById<TextView>(Resource.Id.actionBar_title).Text = "Davinci";
-            SetSupportActionBar(toolBar);
-            SupportActionBar.SetDisplayShowTitleEnabled(false);
+            SetActionBar("Davinci");
 
-            ShowFragment(new FeedFragment());
+            initializeFragments();
+            ShowFragment(feedFragment);
 
-            ImageButton settingsButton = FindViewById<ImageButton>(Resource.Id.Feed_settingsButton);
-            ImageButton uploadButton = FindViewById<ImageButton>(Resource.Id.Feed_uploadButton);
+            Button settingsButton = FindViewById<Button>(Resource.Id.Feed_settingsButton);
+            Button uploadButton = FindViewById<Button>(Resource.Id.Feed_uploadButton);
+            Button searchBtn = FindViewById<Button>(Resource.Id.Feed_searchBtn);
 
             settingsButton.Click += (s, e) => Settings();
             uploadButton.Click += (s, e) => Upload();
+            searchBtn.Click += (s, e) => Search();
         }
+
+        protected override void initializeFragments()
+        {
+            base.initializeFragments();
+
+            feedFragment = new FeedFragment();
+            searchFragment = new SearchFragment();
+
+            var trans = SupportFragmentManager.BeginTransaction();
+
+            trans.Add(Resource.Id.fragmentContainer, searchFragment, "search");
+            trans.Hide(searchFragment);
+
+            trans.Add(Resource.Id.fragmentContainer, feedFragment, "feed");
+
+            currentFragment = feedFragment;
+
+            trans.Commit();
+        }
+
+        private void Search()
+        {
+            if (currentFragment != searchFragment)
+            {
+                ShowFragment(searchFragment);
+                //TODO Set Tint
+            }
+        }
+
         private void Settings()
         {
             StartActivity(new Intent(Application.Context, typeof(SettingsActivity)));
         }
+
         private void Upload()
         {
             StartActivity(new Intent(Application.Context, typeof(UploadActivity)));

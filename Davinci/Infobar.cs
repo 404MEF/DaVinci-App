@@ -13,11 +13,17 @@ namespace Davinci
             Error = 2
         }
 
-        public static void Show(Context context, string text, InfoLevel infoLevel, GravityFlags gravity)
+        public static void Show(Context context, string text, InfoLevel infoLevel, GravityFlags gravity,bool actionBar = true)
         {
             LayoutInflater inflater = context.GetSystemService(Context.LayoutInflaterService) as LayoutInflater;
 
             View layout = inflater.Inflate(Resource.Layout.Infobar,null);
+
+            //if (!actionBar)
+            //{
+            //    var layoutParams = layout.FindViewById<RelativeLayout>(Resource.Id.Infobar_root).LayoutParameters as RelativeLayout.LayoutParams;
+            //    layoutParams.SetMargins(0, 0, 0, 0);
+            //}
 
             TextView textView = layout.FindViewById<TextView>(Resource.Id.Infobar_text);
             textView.Text = text;

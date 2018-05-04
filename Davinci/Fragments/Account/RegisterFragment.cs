@@ -6,6 +6,7 @@ using Android.Widget;
 
 using Davinci.Api;
 using Davinci.Api.Models;
+using Davinci.Activities;
 
 namespace Davinci.Fragments.Account
 {
@@ -50,16 +51,16 @@ namespace Davinci.Fragments.Account
 
                 if (response.OK)
                 {
-                    Infobar.Show(this.Context, response.message, Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal);
+                    Infobar.Show(this.Context, response.message, Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal,false);
 
-                    Login();
+                    ((AccountActivity)parentActivity).Login();
                 }
                 else
                 {
                     toggleUiInput();
                     registerBtn.Text = "Register";
 
-                    Infobar.Show(this.Context, response.message, Infobar.InfoLevel.Warning, GravityFlags.Top | GravityFlags.FillHorizontal);
+                    Infobar.Show(this.Context, response.message, Infobar.InfoLevel.Error, GravityFlags.Top | GravityFlags.FillHorizontal,false);
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
@@ -115,10 +116,5 @@ namespace Davinci.Fragments.Account
             return true;
         }
 
-        private void Login()
-        {
-            parentActivity.ShowFragment(new LoginFragment());
-            parentActivity.ClearStack();
-        }
     }
 }
