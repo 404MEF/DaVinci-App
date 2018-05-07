@@ -60,7 +60,14 @@ namespace Davinci.Fragments.Account
             {
                 var response = responseTask.Result;
 
-                if (response.OK)
+                if (responseTask.Status == TaskStatus.Canceled)
+                {
+                    toggleUiInput();
+                    loginBtn.Text = "Login";
+
+                    Infobar.Show(this.Context, "Connection error", Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal, false);
+                }
+                else if (response.OK)
                 {
                     saveCredentials(rememberBox.Checked);
 

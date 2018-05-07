@@ -13,9 +13,9 @@
     <View
         style="@style/SettingsActivity_CategoryDivider"
         android:layout_below="@id/header"
-        android:background="@color/primaryLightColor"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="8dp"
+        android:id="@+id/divider" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/popularRecyclerView"
         android:layout_width="match_parent"
@@ -23,9 +23,8 @@
         android:scrollbars="vertical"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="48dp"
         android:layout_above="@+id/viewBar"
-        android:layout_marginBottom="4dp" />
+        android:layout_below="@id/divider" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/searchRecyclerView"
         android:layout_width="match_parent"
@@ -33,43 +32,44 @@
         android:scrollbars="vertical"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="48dp"
-        android:layout_above="@+id/viewBar"
-        android:layout_marginBottom="56dp"
+        android:layout_above="@+id/divider2"
+        android:layout_below="@id/divider"
         android:visibility="gone" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black"
+        android:layout_above="@+id/viewBar"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:id="@+id/divider2" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primaryColor"
         android:layout_alignParentBottom="true"
-        android:weightSum="5"
+        android:weightSum="10"
         android:id="@id/viewBar">
         <AutoCompleteTextView
             android:id="@+id/searchCategoryField"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:hint="Search Category Name"
+            android:hint="Search Category"
             android:textSize="12dp"
             android:singleLine="true"
             android:maxLength="20"
             android:paddingLeft="8dp"
-            android:layout_weight="4.9"
-            android:textColor="@android:color/white"
+            android:layout_weight="8"
             android:layout_gravity="center_vertical"
-            android:backgroundTint="#ffffffff"
-            android:textColorHighlight="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:backgroundTint="#ffb4b4b4" />
         <Button
             android:id="@+id/searchBtn"
             android:layout_height="48dp"
-            android:layout_width="wrap_content"
-            android:drawableTop="@drawable/FeedSearchBtn"
-            android:text="Search"
-            android:textSize="11sp"
-            android:paddingTop="8dp"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:background="?android:selectableItemBackgroundBorderless"
-            android:layout_weight="0.1" />
+            android:layout_width="0dp"
+            android:paddingTop="16dp"
+            android:layout_weight="2"
+            android:src="@drawable/ic_search_black_18dp"
+            android:scaleType="centerInside"
+            android:drawableTop="@drawable/Search_searchBtn"
+            android:background="?android:attr/selectableItemBackground" />
     </LinearLayout>
 </RelativeLayout>

@@ -22,10 +22,6 @@
   <style name="DavinciTheme.Settings" parent="DavinciTheme">
   </style>
 
-  <style name="DavinciTheme.Dialog" parent="Theme.AppCompat">
-    
-  </style>
-
   <!--Account Activity-->
   <style name="AccountActivity_Space">
     <item name="android:layout_width">match_parent</item>
@@ -126,7 +122,8 @@
     <item name="android:textSize">12dp</item>
     <item name="android:textAllCaps">false</item>
     <item name="android:gravity">center_vertical</item>
-    <item name="android:drawableRight">@drawable/ic_chevron_right_black_24dp</item>
+    <item name="android:backgroundTint">#ffffff</item>
+    <item name="android:drawablePadding">12dp</item>    
   </style>
 
   <style name="SettingsActivity_SettingDivider">

@@ -10,20 +10,20 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Support.V7.Widget;
-using RecyclerViewAnimators.Animators;
 using Android.Views.Animations;
 using System.Threading.Tasks;
 using Davinci.Api.Models;
 using Davinci.Adapters.Feed;
 using Davinci.Activities;
 using Davinci.Fragments.Feed;
+using Davinci.Adapters.Search;
 
 namespace Davinci.Activities
 {
     [Activity(Theme = "@style/DavinciTheme.Feed", WindowSoftInputMode = SoftInput.AdjustPan, NoHistory = true)]
-    public class CategoryActivity : BaseActivity
+    public class CategoryActivity : ToolbarActivity
     {
-        TextView header, imageCount;
+        TextView imageCount;
         Button followBtn;
 
         RecyclerView recyclerView;
@@ -32,17 +32,19 @@ namespace Davinci.Activities
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.CategoryFragment);
+
+            SetContentView(Resource.Layout.Category);
 
             string id = Intent.GetStringExtra("id");
             string name = Intent.GetStringExtra("name");
             int count = Intent.GetIntExtra("count", 0);
 
+            string categoryHeader = "#" + name.First().ToString().ToUpper() + name.Substring(1);
 
-            header = FindViewById<TextView>(Resource.Id.categoryHeader);
+            SetActionBar(categoryHeader);
+
             imageCount = FindViewById<TextView>(Resource.Id.imageCountField);
 
-            header.Text = "#" + name.First().ToString().ToUpper() + name.Substring(1);
             imageCount.Text = count.ToString() + " Images";
 
             followBtn = FindViewById<Button>(Resource.Id.followBtn);
@@ -52,11 +54,29 @@ namespace Davinci.Activities
 
             recyclerView = FindViewById<RecyclerView>(Resource.Id.categoryRecyclerView);
             recyclerView.HasFixedSize = true;
-            recyclerView.NestedScrollingEnabled = false;
             recyclerView.SetLayoutManager(viewManager);
 
             getFollowStatus(id);
             getPosts(id);
+        }
+
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.category_toolbar_menu, menu);
+            return true;
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.menu_close:
+                    this.Finish();
+                    return true;
+            }
+
+            return base.OnOptionsItemSelected(item);
         }
 
         private void follow(string id)
@@ -78,7 +98,7 @@ namespace Davinci.Activities
                         followBtn.Text = "Unfollow";
                     }
                 }
-            });
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void getFollowStatus(string id)
@@ -98,7 +118,7 @@ namespace Davinci.Activities
                 {
                     followBtn.Text = "Follow";
                 }
-            },TaskScheduler.FromCurrentSynchronizationContext());
+=            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void getPosts(string id)

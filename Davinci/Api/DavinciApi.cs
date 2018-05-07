@@ -13,9 +13,11 @@ namespace Davinci.Api
 {
     public sealed class DavinciApi
     {
-        const string BASE_URL = @"http://10.0.2.2:3000/api";
-        //const string BASE_URL = @"http://192.168.1.10:3000/api";
-        //const string BASE_URL = @"http://davinci-env-1.q3gkbixajq.us-east-2.elasticbeanstalk.com/api";
+        //const string BASE_URL = @"http://10.0.2.2:3000/api";
+        const string BASE_URL = @"http://davinci-env.qmicn3gpdm.eu-west-1.elasticbeanstalk.com/api";
+
+        const int TIMEOUT = 5;
+
         private static RestClient _client;
         private static RestClient client
         {
@@ -24,8 +26,8 @@ namespace Davinci.Api
                 if (_client == null)
                 {
                     _client = new RestClient(formatUri(BASE_URL));
-                    _client.Timeout = 5000;
-                    _client.ReadWriteTimeout = 5000;
+                    _client.Timeout = 5 * 1000;
+                    _client.ReadWriteTimeout = 5 * 1000;
                 }
 
                 return _client;
@@ -68,6 +70,7 @@ namespace Davinci.Api
                 return errorModel;
             }
         }
+
         private static T Post<T>(string resource, string jsonBody = "", HttpBasicAuthenticator authenticator = null, string token = "") where T : BaseApiModel, new()
         {
             client.Authenticator = authenticator;
@@ -110,7 +113,7 @@ namespace Davinci.Api
                     request.AddQueryParameter(keyValue.Key, keyValue.Value);
             }
 
-            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(TIMEOUT));
             var response = await client.ExecuteTaskAsync(request, cancellationTokenSource.Token);
 
             try
@@ -140,7 +143,7 @@ namespace Davinci.Api
             if (!string.IsNullOrEmpty(jsonBody))
                 request.AddParameter("application/json", jsonBody, ParameterType.RequestBody);
 
-            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(TIMEOUT));
             var response = await client.ExecuteTaskAsync(request, cancellationTokenSource.Token);
 
             try
@@ -277,15 +280,21 @@ namespace Davinci.Api
             return await GetAsync<VoteModel>(resource, Token.value,parameter);
         }
 
-        public static async Task<BaseApiModel> VotePost(string postId, int vote)
+        public static async Task<VoteModel> VotePost(string postId, int vote)
         {
             const string resource = @"feed/vote";
 
             string body = JsonConvert.SerializeObject(new { postId = postId, vote = vote });
 
-            return await PostAsync<BaseApiModel>(resource, body, token: Token.value);
+            return await PostAsync<VoteModel>(resource, body, token: Token.value);
         }
 
+        public static async Task<PostCollectionModel> GetProfilePosts()
+        {
+            const string resource = @"feed/profile";
+
+            return await GetAsync<PostCollectionModel>(resource, Token.value);
+        }
 
 
         #endregion

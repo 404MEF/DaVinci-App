@@ -12,20 +12,19 @@ using Android.Graphics;
 using Android.Util;
 using Android.Graphics.Drawables;
 
+using Com.Bumptech.Glide;
 using Xamarin.Media;
+using Com.dmytrodanylyk;
 
 namespace Davinci.Activities
 {
     [Activity(Theme = "@style/DavinciTheme.Feed", WindowSoftInputMode = SoftInput.AdjustPan, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     class UploadActivity : ToolbarActivity
     {
-        Button takeBtn, chooseBtn, clearBtn, uploadBtn;
+        Button takeBtn, chooseBtn, clearBtn;
+        ActionProcessButton uploadBtn;
         EditText categoryField;
         ImageView imageView;
-        TextView imageText;
-
-        Bitmap bitmap;
-
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -38,14 +37,31 @@ namespace Davinci.Activities
             takeBtn = FindViewById<Button>(Resource.Id.Upload_takeBtn);
             chooseBtn = FindViewById<Button>(Resource.Id.Upload_chooseBtn);
             clearBtn = FindViewById<Button>(Resource.Id.Upload_clearBtn);
-            uploadBtn = FindViewById<Button>(Resource.Id.Upload_uploadBtn);
-            categoryField = FindViewById<EditText>(Resource.Id.Upload_catField);
+            uploadBtn = FindViewById<ActionProcessButton>(Resource.Id.Upload_uploadBtn);
+            categoryField = FindViewById<EditText>(Resource.Id.Upload_categoryField);
             imageView = FindViewById<ImageView>(Resource.Id.Upload_imageView);
-            imageText = FindViewById<TextView>(Resource.Id.Upload_imageText);
 
             imageClearUI();
 
             setEvents();
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.category_toolbar_menu, menu);
+            return true;
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.menu_close:
+                    this.Finish();
+                    return true;
+            }
+
+            return base.OnOptionsItemSelected(item);
         }
 
         private void setEvents()
@@ -58,13 +74,13 @@ namespace Davinci.Activities
 
         private void imageUploadedUI()
         {
-            takeBtn.Visibility = chooseBtn.Visibility = imageText.Visibility = ViewStates.Gone;
+            takeBtn.Visibility = chooseBtn.Visibility = ViewStates.Gone;
             clearBtn.Visibility = imageView.Visibility = ViewStates.Visible;
         }
 
         private void imageClearUI()
         {
-            takeBtn.Visibility = chooseBtn.Visibility = imageText.Visibility = ViewStates.Visible;
+            takeBtn.Visibility = chooseBtn.Visibility = ViewStates.Visible;
             clearBtn.Visibility = imageView.Visibility = ViewStates.Gone;
         }
 
@@ -83,9 +99,9 @@ namespace Davinci.Activities
                 var intent = picker.GetTakePhotoUI(new StoreCameraMediaOptions
                 {
                     Name = string.Format("photo-{0}.jpg", Guid.NewGuid()),
-                    Directory = "Davinci",
+                    Directory = "Davinci"
                 });
-                StartActivityForResult(intent, 1);
+                StartActivityForResult(intent, 99);
             }
         }
 
@@ -95,85 +111,77 @@ namespace Davinci.Activities
 
             var intent = picker.GetPickPhotoUI();
 
-            StartActivityForResult(intent, 1);
+            StartActivityForResult(intent, 99);
         }
 
         private void uploadImage()
         {
-            var categoryText = categoryField.Text;
+            var categoryText = categoryField.Text.Trim();
 
             if (imageView.Drawable == null)
             {
                 Infobar.Show(this, "No image to upload", Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal);
                 return;
             }
+            else if (string.IsNullOrEmpty(categoryText))
+            {
+                categoryField.RequestFocus();
+                categoryField.SetError("No category specified", null);
+                return;
+            }
+
+            uploadBtn.setMode(ActionProcessButton.Mode.ENDLESS);
+            uploadBtn.setProgress(1);
+
             var bm = (imageView.Drawable as BitmapDrawable).Bitmap;
-
-
+            
             Task.Run(async () =>
             {
+                var base64Image = string.Empty;
+
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    await bm.CompressAsync(Bitmap.CompressFormat.Jpeg, 80, memoryStream);
+                    await bm.CompressAsync(Bitmap.CompressFormat.Webp, 85, memoryStream);
 
-                    var base64Image = Base64.EncodeToString(memoryStream.ToArray(), Base64Flags.Default);
-
-                    var response = await Api.DavinciApi.UploadPost(base64Image, categoryText);
-
-                    if (response.OK)
-                    {
-                        RunOnUiThread(() => Infobar.Show(this, response.message, Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal));
-                        await Task.Delay(1000);
-                        RunOnUiThread(() => this.Finish());
-                    }
+                    base64Image = Base64.EncodeToString(memoryStream.ToArray(), Base64Flags.Default);
                 }
-            });
+
+                return await Api.DavinciApi.UploadPost(base64Image, categoryText);
+            }).ContinueWith(async t =>
+            {
+                var response = t.Result;
+
+                if (response.OK)
+                {
+                    Infobar.Show(this, response.message, Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal);
+                    uploadBtn.setProgress(100);
+                    await Task.Delay(1000);
+                    this.Finish();
+                }
+
+                uploadBtn.setProgress(0);
+
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
             if (resultCode != Result.Ok)
                 return;
-
+            var path = "";
             Task.Run(async () =>
             {
-                var mediaFile = await data.GetMediaFileExtraAsync(this);
+                var media = await data.GetMediaFileExtraAsync(this);
+                path = media.Path;
+            }).ContinueWith(t =>
+            {
+                Glide.With(this)
+                .Load(path)
+                .Into(imageView);
 
-                using (var mediaStream = mediaFile.GetStream())
-                {
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.InJustDecodeBounds = true;
+                imageUploadedUI();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
 
-                    int height = options.OutHeight;
-                    int width = options.OutWidth;
-
-                    int sampleSize = 1;
-                    if (height > 256 || width > 256)
-                    {
-                        int heightRatio = (int)Math.Round((float)height / (float)256);
-                        int widthRatio = (int)Math.Round((float)width / (float)256);
-                        sampleSize = Math.Min(heightRatio, widthRatio);
-                    }
-
-                    options = new BitmapFactory.Options();
-                    options.InSampleSize = sampleSize;
-
-                    var bitmap = await BitmapFactory.DecodeStreamAsync(mediaStream, null, options);
-
-                    RunOnUiThread(() =>
-                    {
-                        imageUploadedUI();
-
-                        imageView.SetImageBitmap(null);
-                        if (this.bitmap != null)
-                            this.bitmap.Dispose();
-                        this.bitmap = null;
-                        this.bitmap = bitmap;
-
-                        imageView.SetImageBitmap(bitmap);
-                    });
-                }
-            });
         }
 
     }

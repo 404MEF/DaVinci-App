@@ -9,4 +9,6 @@
   <dimen name="AccountActivity_Button_Margin">32dp</dimen>
   <dimen name="AccountActivity_Button_Text">14dp</dimen>
 
+  <dimen name="AppBarHeight">48dp</dimen>
+
 </resources>

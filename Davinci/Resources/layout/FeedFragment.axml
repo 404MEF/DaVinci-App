@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swipeRefreshLayout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-  <android.support.v4.widget.NestedScrollView
-    android:id="@+id/scrollView"
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include layout="@layout/FeedFragmentContent"/>
-  </android.support.v4.widget.NestedScrollView>
-</android.support.v4.widget.SwipeRefreshLayout>
+  <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/swipeRefreshLayout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+      <include
+          layout="@layout/FeedFragmentContent" />
+    </ScrollView>
+  </android.support.v4.widget.SwipeRefreshLayout>
+  <Refractored.Fab.FloatingActionButton
+      android:id="@+id/fab"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|right"
+      android:layout_margin="16dp"
+      android:src="@drawable/ic_add_a_photo_white_18dp"
+      app:fab_colorNormal="@color/primaryColor"
+      app:fab_colorPressed="@color/primaryDarkColor"
+      app:fab_colorRipple="@color/primaryLightColor" />
+</FrameLayout>

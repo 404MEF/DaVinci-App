@@ -49,7 +49,14 @@ namespace Davinci.Fragments.Account
             {
                 var response = responseTask.Result;
 
-                if (response.OK)
+                if (responseTask.Status == TaskStatus.Canceled)
+                {
+                    toggleUiInput();
+                    registerBtn.Text = "Register";
+
+                    Infobar.Show(this.Context, "Connection error", Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal, false);
+                }
+                else if (response.OK)
                 {
                     Infobar.Show(this.Context, response.message, Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal,false);
 

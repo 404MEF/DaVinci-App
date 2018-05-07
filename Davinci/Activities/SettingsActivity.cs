@@ -18,12 +18,28 @@ namespace Davinci.Activities
 
             SetActionBar("Setings");
 
-            Button logoutBtn = FindViewById<Button>(Resource.Id.Settings_logoutButton);
-
-            logoutBtn.Click += (s, e) => Logout();
+            FindViewById<Button>(Resource.Id.Settings_logoutButton).Click += (s, e) => logout();
         }
 
-        private void Logout()
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.category_toolbar_menu, menu);
+            return true;
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.menu_close:
+                    this.Finish();
+                    return true;
+            }
+
+            return base.OnOptionsItemSelected(item);
+        }
+
+        private void logout()
         {
             var prefsEdit = PreferenceManager.GetDefaultSharedPreferences(Application.Context).Edit();
             prefsEdit.Remove(GetString(Resource.String.userpassword));

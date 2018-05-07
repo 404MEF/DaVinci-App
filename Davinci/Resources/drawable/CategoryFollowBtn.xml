@@ -3,7 +3,7 @@
 
   <item
   android:drawable="@drawable/ic_thumb_up_black_18dp"
-  android:width="16dp"
-  android:height="16dp"/>
+  android:width="18dp"
+  android:height="18dp"/>
 
 </layer-list>

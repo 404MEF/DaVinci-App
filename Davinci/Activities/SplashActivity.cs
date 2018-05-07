@@ -5,7 +5,6 @@ using Android.OS;
 using Android.Content;
 using Android.Support.V7.App;
 using Android.Preferences;
-using HockeyApp.Android;
 
 namespace Davinci.Activities
 {
@@ -15,8 +14,6 @@ namespace Davinci.Activities
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            CrashManager.Register(this, "0e2e9be8322c5ab929e41d776bd6d1d5", new AutoCrashManagerListener() { });
         }
 
         protected override void OnResume()
@@ -48,7 +45,9 @@ namespace Davinci.Activities
                 {
                     var auth = authTask.Result;
 
-                    if (auth.OK)
+                    if (authTask.Status == TaskStatus.Canceled)
+                        StartActivity(new Intent(Application.Context, typeof(AccountActivity)));
+                    else if (auth.OK)
                         StartActivity(new Intent(Application.Context, typeof(FeedActivity)));
                     else
                         StartActivity(new Intent(Application.Context, typeof(AccountActivity)));

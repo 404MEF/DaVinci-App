@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        layout="@layout/actionBar" />
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/categoryRecyclerView"
+        android:layout_below="@id/actionBar"
+        android:layout_above="@+id/imageCountField" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:minHeight="42dp"
+        android:id="@+id/frameLayout1"
+        android:layout_alignParentBottom="true"
+        android:background="@color/primaryColor">
+        <Button
+            android:text="Follow"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/followBtn"
+            android:textSize="12sp"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white" />
+    </FrameLayout>
+    <TextView
+        android:text="2.525 Images"
+        android:id="@+id/imageCountField"
+        android:textSize="12sp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/frameLayout1"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp" />
+</RelativeLayout>

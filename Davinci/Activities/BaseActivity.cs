@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using Android.App;
+using Android.Content;
 using Android.OS;
 
 using Android.Support.V7.App;
@@ -24,8 +25,7 @@ namespace Davinci
         {
             base.OnCreate(savedInstanceState);
 
-            CrashManager.Register(this, "0e2e9be8322c5ab929e41d776bd6d1d5", new AutoCrashManagerListener() { });
-
+            //CrashManager.Register(this, "0e2e9be8322c5ab929e41d776bd6d1d5", new AutoCrashManagerListener() { });
         }
 
         public override void OnBackPressed()
@@ -49,8 +49,11 @@ namespace Davinci
 
         public virtual void ShowFragment(BaseFragment fragment, bool addToStack = true)
         {
-            var trans = SupportFragmentManager.BeginTransaction();
+            if (currentFragment == fragment)
+                return;
 
+            var trans = SupportFragmentManager.BeginTransaction();
+            trans.SetTransition((int)FragmentTransit.FragmentFade);
             trans.Hide(currentFragment);
             trans.Show(fragment);
             if (addToStack)

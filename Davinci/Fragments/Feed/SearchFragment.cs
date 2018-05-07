@@ -9,7 +9,6 @@ using Android.Widget;
 
 using Davinci.Adapters.Search;
 using Davinci.Api.Models;
-using RecyclerViewAnimators.Animators;
 using Davinci.Activities;
 using Android.Content;
 using Android.App;
@@ -18,6 +17,7 @@ namespace Davinci.Fragments.Feed
 {
     class SearchFragment : BaseFragment
     {
+        const int SEARCH_SUGGESTION_START_LENGTH = 2;
         TextView header;
 
         AutoCompleteTextView searchField;
@@ -55,10 +55,6 @@ namespace Davinci.Fragments.Feed
             searchRecyclerView = view.FindViewById<RecyclerView>(Resource.Id.searchRecyclerView);
             searchRecyclerView.HasFixedSize = true;
             searchRecyclerView.SetLayoutManager(searchViewManager);
-
-            var animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
-            popularRecyclerView.SetItemAnimator(animator);
-            searchRecyclerView.SetItemAnimator(animator);
         }
 
         public override void OnResume()
@@ -70,7 +66,7 @@ namespace Davinci.Fragments.Feed
 
         private void SearchField_AfterTextChanged(object sender, Android.Text.AfterTextChangedEventArgs e)
         {
-            if (searchField.Text.Length >= 3)
+            if (searchField.Text.Length >= SEARCH_SUGGESTION_START_LENGTH)
             {
                 //Get search suggestions
                 Task.Run(async () =>
@@ -127,8 +123,6 @@ namespace Davinci.Fragments.Feed
                         intent.PutExtra("name", c.name);
                         intent.PutExtra("count", c.imagecount);
                         StartActivity(intent);
-                        //StartActivity(new Intent(Application.Context, typeof(CategoryActivity)));
-
                     };
                     popularRecyclerView.SetAdapter(popularAdapter);
                 });
@@ -162,7 +156,7 @@ namespace Davinci.Fragments.Feed
                         intent.PutExtra("id", c._id);
                         intent.PutExtra("name", c.name);
                         intent.PutExtra("count", c.imagecount);
-                        //StartActivity(new Intent(Application.Context, typeof(CategoryActivity)));
+                        StartActivity(intent);
                     };
                     searchRecyclerView.SetAdapter(searchAdapter);
                 });

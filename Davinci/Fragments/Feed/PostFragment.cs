@@ -1,31 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.Content;
+﻿using System.Threading.Tasks;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Android.Support.V7.Widget;
-using RecyclerViewAnimators.Animators;
-using Android.Views.Animations;
-using System.Threading.Tasks;
-using Davinci.Api.Models;
-using Davinci.Adapters.Feed;
-using DialogFragment = Android.Support.V4.App.DialogFragment;
 using Android.App;
-using Davinci.Components;
 using Android.Graphics;
 using Android.Util;
+
+using Davinci.Api.Models;
+using Davinci.Components;
+using DialogFragment = Android.Support.V4.App.DialogFragment;
 
 namespace Davinci.Fragments.Feed
 {
     class PostFragment : DialogFragment
     {
-        TextView header;
+        TextView headerTextView, detailTextView;
+        ImageView imageView;
         Button likeBtn, dislikeBtn;
+        LikeRatioBar ratioBar;
+
         public static PostFragment newInstance(string id)
         {
             PostFragment fragment = new PostFragment();
@@ -35,11 +28,6 @@ namespace Davinci.Fragments.Feed
             return fragment;
         }
 
-        public override Dialog OnCreateDialog(Bundle savedInstanceState)
-        {
-
-            return base.OnCreateDialog(savedInstanceState);
-        }
 
         public override void OnActivityCreated(Bundle savedInstanceState)
         {
@@ -58,13 +46,15 @@ namespace Davinci.Fragments.Feed
 
             string id = Arguments.GetString("id");
 
-            header = view.FindViewById<TextView>(Resource.Id.categoryHeader);
-            likeBtn = View.FindViewById<Button>(Resource.Id.likeBtn);
-            dislikeBtn = View.FindViewById<Button>(Resource.Id.dislikeBtn);
+            headerTextView = view.FindViewById<TextView>(Resource.Id.categoryText);
+            detailTextView = view.FindViewById<TextView>(Resource.Id.detailText);
+            likeBtn = view.FindViewById<Button>(Resource.Id.likeBtn);
+            dislikeBtn = view.FindViewById<Button>(Resource.Id.dislikeBtn);
+            ratioBar = view.FindViewById<LikeRatioBar>(Resource.Id.ratioBar);
+            imageView = view.FindViewById<SquareImageView>(Resource.Id.imageView);
 
-
-            likeBtn.Click += (s, e) => votePost(id, 1);
-            dislikeBtn.Click += (s, e) => votePost(id, 0);
+            likeBtn.Click += (s, e) => sendVote(id, 1);
+            dislikeBtn.Click += (s, e) => sendVote(id, -1);
 
             getPostDetails(id);
         }
@@ -79,7 +69,7 @@ namespace Davinci.Fragments.Feed
                 dislikeBtn.Text = "Dislike";
                 dislikeBtn.Enabled = true;
             }
-            else if (vote == 0)
+            else if (vote == -1)
             {
                 //Disliked
                 dislikeBtn.Text = "Disliked";
@@ -108,18 +98,22 @@ namespace Davinci.Fragments.Feed
             }).ContinueWith(t =>
             {
                 //set fields
-                View.FindViewById<TextView>(Resource.Id.categoryText).Text = "Owner: " + t.Result.p.post.owner.username;
-                View.FindViewById<TextView>(Resource.Id.detailText).Text = "Uploaded at " + t.Result.p.post.createdAt.Split('T')[0];
-       
+                headerTextView.Text = "Owner: " + t.Result.p.post.owner.username;
+                detailTextView.Text = "Uploaded at " + t.Result.p.post.createdAt.Split('T')[0];
+
                 setVoteButtonState(t.Result.v.vote);
+
+                ratioBar.SetRatio(t.Result.p.post.LikeRatio);
 
                 var imageData = Base64.Decode(t.Result.p.post.image, Base64Flags.Default);
                 var bitmap = BitmapFactory.DecodeByteArray(imageData, 0, imageData.Length);
-                View.FindViewById<SquareImageView>(Resource.Id.imageView).SetImageBitmap(bitmap);
+
+               imageView.SetImageBitmap(bitmap);
+
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private void votePost(string id, int vote)
+        private void sendVote(string id, int vote)
         {
             bool likeState = likeBtn.Enabled;
             bool dislikeState = likeBtn.Enabled;
@@ -137,13 +131,20 @@ namespace Davinci.Fragments.Feed
                 if (t.Result.OK)
                 {
                     setVoteButtonState(vote);
+
+                    ratioBar.SetRatio(getLikeRatio(t.Result.likes,t.Result.dislikes));
                 }
                 else
                 {
                     likeBtn.Enabled = likeState;
                     dislikeBtn.Enabled = dislikeState;
                 }
-            },TaskScheduler.FromCurrentSynchronizationContext());
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private int getLikeRatio(int likes, int dislikes)
+        {
+            return (int)(100 * likes / (likes + dislikes));
         }
     }
 }

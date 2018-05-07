@@ -1,7 +1,7 @@
 ﻿namespace Davinci.Api.Models
 {
-    public class VoteModel : BaseApiModel
+    public class FollowModel : BaseApiModel
     {
-        public int vote { get; set; }
+        public int follow { get; set; }
     }
 }
