@@ -4,14 +4,13 @@ using System.Threading.Tasks;
 using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Views;
-using Android.Views.Animations;
+using Android.Content;
+using Android.App;
 using Android.Widget;
 
 using Davinci.Adapters.Search;
-using Davinci.Api.Models;
 using Davinci.Activities;
-using Android.Content;
-using Android.App;
+using Davinci.Helper;
 
 namespace Davinci.Fragments.Feed
 {
@@ -37,24 +36,35 @@ namespace Davinci.Fragments.Feed
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            header = view.FindViewById<TextView>(Resource.Id.header);
+            setUI();
+            setEvents();
 
-            searchField = view.FindViewById<AutoCompleteTextView>(Resource.Id.searchCategoryField);
-            searchField.AfterTextChanged += SearchField_AfterTextChanged;
+            popularRecyclerView.HasFixedSize = true;
+            popularRecyclerView.SetLayoutManager(popularViewManager);
 
-            searchBtn = view.FindViewById<Button>(Resource.Id.searchBtn);
-            searchBtn.Click += (s, e) => searchCategories();
+            searchRecyclerView.HasFixedSize = true;
+            searchRecyclerView.SetLayoutManager(searchViewManager);
+        }
+
+        private void setUI()
+        {
+            header = View.FindViewById<TextView>(Resource.Id.header);
+
+            searchField = View.FindViewById<AutoCompleteTextView>(Resource.Id.searchCategoryField);
+            searchBtn = View.FindViewById<Button>(Resource.Id.searchBtn);
 
             popularViewManager = new LinearLayoutManager(Context);
             searchViewManager = new LinearLayoutManager(Context);
 
-            popularRecyclerView = view.FindViewById<RecyclerView>(Resource.Id.popularRecyclerView);
-            popularRecyclerView.HasFixedSize = true;
-            popularRecyclerView.SetLayoutManager(popularViewManager);
+            popularRecyclerView = View.FindViewById<RecyclerView>(Resource.Id.popularRecyclerView);
+            searchRecyclerView = View.FindViewById<RecyclerView>(Resource.Id.searchRecyclerView);
 
-            searchRecyclerView = view.FindViewById<RecyclerView>(Resource.Id.searchRecyclerView);
-            searchRecyclerView.HasFixedSize = true;
-            searchRecyclerView.SetLayoutManager(searchViewManager);
+        }
+
+        private void setEvents()
+        {
+            searchField.AfterTextChanged += (s, e) => getSearchSuggestions();
+            searchBtn.Click += (s, e) => searchCategories();
         }
 
         public override void OnResume()
@@ -64,28 +74,28 @@ namespace Davinci.Fragments.Feed
             getPopularCategories();
         }
 
-        private void SearchField_AfterTextChanged(object sender, Android.Text.AfterTextChangedEventArgs e)
+        private void getSearchSuggestions()
         {
             if (searchField.Text.Length >= SEARCH_SUGGESTION_START_LENGTH)
             {
                 //Get search suggestions
                 Task.Run(async () =>
                 {
-                    SearchSuggestionModel suggestions = await Api.DavinciApi.GetSearchSuggestions(searchField.Text);
-                    return suggestions;
+                    return await Api.DavinciApi.GetSearchSuggestions(searchField.Text);
                 }).ContinueWith(t =>
                 {
-                    if (suggestionAdapter == null)
-                    {
-                        suggestionAdapter = new ArrayAdapter<string>(this.Context, Resource.Layout.Search_dropdownItem, t.Result.results.Select(n => n.name).ToArray());
-                        searchField.Adapter = suggestionAdapter;
-                    }
-                    else
-                    {
-                        suggestionAdapter.Clear();
-                        suggestionAdapter.AddAll(t.Result.results.Select(n => n.name).ToList());
-                        suggestionAdapter.NotifyDataSetChanged();
-                    }
+                    if (t.Status != TaskStatus.Canceled && t.Result.OK)
+                        if (suggestionAdapter == null)
+                        {
+                            suggestionAdapter = new ArrayAdapter<string>(this.Context, Resource.Layout.Search_dropdownItem, t.Result.results.Select(n => "#" + n.name.Capitalize()).ToArray());
+                            searchField.Adapter = suggestionAdapter;
+                        }
+                        else
+                        {
+                            suggestionAdapter.Clear();
+                            suggestionAdapter.AddAll(t.Result.results.Select(n => "#" + n.name.Capitalize()).ToList());
+                            suggestionAdapter.NotifyDataSetChanged();
+                        }
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }
             else
@@ -100,7 +110,7 @@ namespace Davinci.Fragments.Feed
                 header.Text = "Most Popular Categories";
                 searchRecyclerView.Visibility = ViewStates.Gone;
                 popularRecyclerView.Visibility = ViewStates.Visible;
-                getPopularCategories();
+                //getPopularCategories();
             }
         }
 
@@ -108,12 +118,10 @@ namespace Davinci.Fragments.Feed
         {
             Task.Run(async () =>
             {
-                CategoryCollectionModel categoryCollection = await Api.DavinciApi.GetPopularCategories();
-                return categoryCollection;
+                return await Api.DavinciApi.GetPopularCategories();
             }).ContinueWith(t =>
             {
-                var k = t.Result.categories;
-                RunOnUIThread(() =>
+                if (t.Status != TaskStatus.Canceled && t.Result.OK)
                 {
                     var popularAdapter = new CategoryAdapter(this.Context, t.Result.categories);
                     popularAdapter.ItemClick += (c) =>
@@ -125,7 +133,7 @@ namespace Davinci.Fragments.Feed
                         StartActivity(intent);
                     };
                     popularRecyclerView.SetAdapter(popularAdapter);
-                });
+                }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
@@ -143,11 +151,10 @@ namespace Davinci.Fragments.Feed
             //Get search results
             Task.Run(async () =>
             {
-                var response = await Api.DavinciApi.SearchCategory(category);
-                return response;
+                return await Api.DavinciApi.SearchCategory(category);
             }).ContinueWith(t =>
             {
-                RunOnUIThread(() =>
+                if (t.Status != TaskStatus.Canceled && t.Result.OK)
                 {
                     var searchAdapter = new CategoryAdapter(this.Context, t.Result.categories);
                     searchAdapter.ItemClick += (c) =>
@@ -159,8 +166,9 @@ namespace Davinci.Fragments.Feed
                         StartActivity(intent);
                     };
                     searchRecyclerView.SetAdapter(searchAdapter);
-                });
+                }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
+
     }
 }

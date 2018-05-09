@@ -1,13 +1,14 @@
-﻿using Android.App;
+﻿using System.Collections.Generic;
+
+using Android.App;
 using Android.Content;
 using Android.OS;
-
 using Android.Support.V7.App;
 
-using Calligraphy;
 using Davinci.Fragments;
-using HockeyApp.Android;
-using System.Collections.Generic;
+
+using Calligraphy;
+using System;
 
 namespace Davinci
 {
@@ -24,8 +25,6 @@ namespace Davinci
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            //CrashManager.Register(this, "0e2e9be8322c5ab929e41d776bd6d1d5", new AutoCrashManagerListener() { });
         }
 
         public override void OnBackPressed()
@@ -69,5 +68,6 @@ namespace Davinci
             for (int i = 0; i < SupportFragmentManager.BackStackEntryCount; ++i)
                 SupportFragmentManager.PopBackStack();
         }
+
     }
 }

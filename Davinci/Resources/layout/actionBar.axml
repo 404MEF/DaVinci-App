@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/actionBar"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/AppBarHeight"
+    android:layout_height="@dimen/appbar_height"
     android:gravity="top"
-    android:minHeight="@dimen/AppBarHeight"
+    android:minHeight="@dimen/appbar_height"
     android:background="?attr/colorPrimary"
     android:elevation="4dp"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:textColor="@android:color/white"
         android:text="Davinci"
-        android:textSize="22dp"
+        android:textSize="@dimen/appbar_text"
         android:layout_gravity="center"
         android:gravity="center"
         fontPath="fonts/Vibur-Regular.ttf" />

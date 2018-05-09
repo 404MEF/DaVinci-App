@@ -12,8 +12,9 @@ using Android.Graphics;
 using Android.Util;
 using Android.Graphics.Drawables;
 
-using Com.Bumptech.Glide;
 using Xamarin.Media;
+
+using Com.Bumptech.Glide;
 using Com.dmytrodanylyk;
 
 namespace Davinci.Activities
@@ -31,37 +32,22 @@ namespace Davinci.Activities
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.Upload);
+            SetActionBar("Upload new image");
 
-            SetActionBar("Upload");
+            setUI();
+            setEvents();
 
+            noImageUI();
+        }
+
+        private void setUI()
+        {
             takeBtn = FindViewById<Button>(Resource.Id.Upload_takeBtn);
             chooseBtn = FindViewById<Button>(Resource.Id.Upload_chooseBtn);
             clearBtn = FindViewById<Button>(Resource.Id.Upload_clearBtn);
             uploadBtn = FindViewById<ActionProcessButton>(Resource.Id.Upload_uploadBtn);
             categoryField = FindViewById<EditText>(Resource.Id.Upload_categoryField);
             imageView = FindViewById<ImageView>(Resource.Id.Upload_imageView);
-
-            imageClearUI();
-
-            setEvents();
-        }
-
-        public override bool OnCreateOptionsMenu(IMenu menu)
-        {
-            MenuInflater.Inflate(Resource.Menu.category_toolbar_menu, menu);
-            return true;
-        }
-
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            switch (item.ItemId)
-            {
-                case Resource.Id.menu_close:
-                    this.Finish();
-                    return true;
-            }
-
-            return base.OnOptionsItemSelected(item);
         }
 
         private void setEvents()
@@ -72,13 +58,13 @@ namespace Davinci.Activities
             uploadBtn.Click += (s, e) => uploadImage();
         }
 
-        private void imageUploadedUI()
+        private void imageUI()
         {
             takeBtn.Visibility = chooseBtn.Visibility = ViewStates.Gone;
             clearBtn.Visibility = imageView.Visibility = ViewStates.Visible;
         }
 
-        private void imageClearUI()
+        private void noImageUI()
         {
             takeBtn.Visibility = chooseBtn.Visibility = ViewStates.Visible;
             clearBtn.Visibility = imageView.Visibility = ViewStates.Gone;
@@ -86,9 +72,11 @@ namespace Davinci.Activities
 
         private void onClearBtnClick()
         {
-            imageClearUI();
+            noImageUI();
 
             imageView.SetImageDrawable(null);
+
+            GC.Collect();
         }
 
         private void takeWithCamera()
@@ -134,7 +122,7 @@ namespace Davinci.Activities
             uploadBtn.setProgress(1);
 
             var bm = (imageView.Drawable as BitmapDrawable).Bitmap;
-            
+
             Task.Run(async () =>
             {
                 var base64Image = string.Empty;
@@ -151,9 +139,14 @@ namespace Davinci.Activities
             {
                 var response = t.Result;
 
+                if (t.Status == TaskStatus.Canceled)
+                {
+                    uploadBtn.setProgress(-1);
+                    return;
+                }
+
                 if (response.OK)
                 {
-                    Infobar.Show(this, response.message, Infobar.InfoLevel.Info, GravityFlags.Top | GravityFlags.FillHorizontal);
                     uploadBtn.setProgress(100);
                     await Task.Delay(1000);
                     this.Finish();
@@ -179,10 +172,27 @@ namespace Davinci.Activities
                 .Load(path)
                 .Into(imageView);
 
-                imageUploadedUI();
+                imageUI();
             }, TaskScheduler.FromCurrentSynchronizationContext());
 
         }
 
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.activity_toolbar_menu, menu);
+            return true;
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.menu_close:
+                    this.Finish();
+                    return true;
+            }
+
+            return base.OnOptionsItemSelected(item);
+        }
     }
 }

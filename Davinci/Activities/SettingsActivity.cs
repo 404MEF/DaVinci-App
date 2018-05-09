@@ -10,33 +10,27 @@ namespace Davinci.Activities
     [Activity(Theme = "@style/DavinciTheme.Settings", WindowSoftInputMode = SoftInput.AdjustPan)]
     public class SettingsActivity : ToolbarActivity
     {
+        Button logoutBtn;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.Settings);
+            SetActionBar("Settings");
 
-            SetActionBar("Setings");
-
-            FindViewById<Button>(Resource.Id.Settings_logoutButton).Click += (s, e) => logout();
+            setUI();
+            setEvents();
         }
 
-        public override bool OnCreateOptionsMenu(IMenu menu)
+        private void setUI()
         {
-            MenuInflater.Inflate(Resource.Menu.category_toolbar_menu, menu);
-            return true;
+            logoutBtn = FindViewById<Button>(Resource.Id.Settings_logoutButton);
         }
 
-        public override bool OnOptionsItemSelected(IMenuItem item)
+        private void setEvents()
         {
-            switch (item.ItemId)
-            {
-                case Resource.Id.menu_close:
-                    this.Finish();
-                    return true;
-            }
-
-            return base.OnOptionsItemSelected(item);
+            logoutBtn.Click += (s, e) => logout();
         }
 
         private void logout()
@@ -50,6 +44,24 @@ namespace Davinci.Activities
 
             StartActivity(new Intent(Application.Context, typeof(AccountActivity)));
             this.Finish();
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.activity_toolbar_menu, menu);
+            return true;
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.menu_close:
+                    this.Finish();
+                    return true;
+            }
+
+            return base.OnOptionsItemSelected(item);
         }
     }
 }

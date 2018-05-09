@@ -23,7 +23,7 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <AndroidKeyStore>true</AndroidKeyStore>
+    <AndroidKeyStore>false</AndroidKeyStore>
     <AndroidSigningKeyStore>C:\Users\berka\Desktop\android.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>bers1996</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>bers</AndroidSigningKeyAlias>
@@ -526,7 +526,9 @@
     <AndroidResource Include="Resources\drawable\SplashImage.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values\dimens.xml" />
+    <AndroidResource Include="Resources\values\dimens.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\colors.xml" />
@@ -541,7 +543,7 @@
     <AndroidResource Include="Resources\drawable\UploadClearBtn.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\menu\category_toolbar_menu.xml" />
+    <AndroidResource Include="Resources\menu\activity_toolbar_menu.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_account_circle_white_18dp.png" />

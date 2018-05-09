@@ -4,74 +4,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-    <include
-        layout="@layout/ActionBar" />
-    <ScrollView
+  <include
+      layout="@layout/ActionBar" />
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="@dimen/appbar_height">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/AppBarHeight">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp">
-            <TextView
-                style="@style/SettingsActivity_CategoryLabel"
-                android:text="Image" />
-            <View
-                style="@style/SettingsActivity_CategoryDivider" />
-            <ImageView
-                android:id="@+id/Upload_imageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:scaleType="centerInside"
-                android:layout_marginBottom="4dp"
-                android:visibility="gone"
-                android:layout_gravity="center_horizontal" />
-            <Button
-                android:id="@+id/Upload_clearBtn"
-                style="@style/SettingsActivity_SettingButton"
-                android:text="Clear photo"
-                android:visibility="gone" />
-            <Button
-                android:id="@+id/Upload_takeBtn"
-                style="@style/SettingsActivity_SettingButton"
-                android:text="Take a photo"
-                android:drawableLeft="@drawable/UploadTakeBtn" />
-            <Button
-                android:id="@+id/Upload_chooseBtn"
-                style="@style/SettingsActivity_SettingButton"
-                android:text="Choose from gallery"
-                android:drawableLeft="@drawable/UploadChooseBtn" />
-            <TextView
-                style="@style/SettingsActivity_CategoryLabel"
-                android:text="Category" />
-            <View
-                style="@style/SettingsActivity_CategoryDivider" />
-            <EditText
-                android:id="@+id/Upload_categoryField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Category Name"
-                android:textSize="12dp"
-                android:singleLine="true"
-                android:maxLength="20" />
-            <Com.dmytrodanylyk.ActionProcessButton xmlns:custom="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/Upload_uploadBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Upload"
-                android:textColor="@android:color/white"
-                custom:pb_colorNormal="@android:color/holo_blue_light"
-                custom:pb_colorPressed="@android:color/holo_blue_dark"
-                custom:pb_colorComplete="@color/primaryColor"
-                custom:pb_textComplete="Upload successful"
-                custom:pb_textProgress="Uploading image..."
-                android:layout_marginTop="8dp" 
-                android:layout_marginBottom="8dp" />
-        </LinearLayout>
-    </ScrollView>
+        style="@style/SettingsActivity_layout">
+      <TextView
+          style="@style/SettingsActivity_CategoryLabel"
+          android:text="Image" />
+      <View
+          style="@style/SettingsActivity_CategoryDivider" />
+      <ImageView
+          android:id="@+id/Upload_imageView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="4dp"
+          android:layout_marginRight="4dp"
+          android:scaleType="centerInside"
+          android:layout_marginBottom="4dp"
+          android:visibility="gone"
+          android:layout_gravity="center_horizontal" />
+      <Button
+          android:id="@+id/Upload_clearBtn"
+          style="@style/SettingsActivity_SettingButton"
+          android:text="Clear photo"
+          android:visibility="gone" />
+      <Button
+          android:id="@+id/Upload_takeBtn"
+          style="@style/SettingsActivity_SettingButton"
+          android:text="Take a photo"
+          android:drawableLeft="@drawable/UploadTakeBtn" />
+      <Button
+          android:id="@+id/Upload_chooseBtn"
+          style="@style/SettingsActivity_SettingButton"
+          android:text="Choose from gallery"
+          android:drawableLeft="@drawable/UploadChooseBtn" />
+      <TextView
+          style="@style/SettingsActivity_CategoryLabel"
+          android:text="Category" />
+      <View
+          style="@style/SettingsActivity_CategoryDivider" />
+      <EditText
+          android:id="@+id/Upload_categoryField"
+          style="@style/SettingsActivity_editText"
+          android:hint="Category Name"/>
+      <Com.dmytrodanylyk.ActionProcessButton xmlns:custom="http://schemas.android.com/apk/res-auto"
+          android:id="@+id/Upload_uploadBtn"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Upload"
+          android:textColor="@android:color/white"
+          custom:pb_colorNormal="@android:color/holo_blue_light"
+          custom:pb_colorPressed="@android:color/holo_blue_dark"
+          custom:pb_colorComplete="@color/primaryColor"
+          custom:pb_textComplete="Upload successful"
+          custom:pb_textProgress="Uploading image..."
+          android:layout_marginTop="8dp"
+          android:layout_marginBottom="8dp" />
+    </LinearLayout>
+  </ScrollView>
 </FrameLayout>

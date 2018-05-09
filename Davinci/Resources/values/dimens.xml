@@ -1,14 +1,28 @@
 <resources>
 
-  <dimen name="AccountActivity_Title_Text">34dp</dimen>
-  <dimen name="AccountActivity_Description_Margin">24dp</dimen>
-  <dimen name="AccountActivity_Description_Text">14dp</dimen>
-  <dimen name="AccountActivity_Space">18dp</dimen>
-  <dimen name="AccountActivity_Input_Margin">32dp</dimen>
-  <dimen name="AccountActivity_Input_Text">14dp</dimen>
-  <dimen name="AccountActivity_Button_Margin">32dp</dimen>
-  <dimen name="AccountActivity_Button_Text">14dp</dimen>
+  <!--Account text-->
+  <dimen name="account_title">34sp</dimen>
+  <dimen name="account_description">15sp</dimen>
+  <dimen name="account_input">14sp</dimen>
+  <dimen name="account_btn">14sp</dimen>
+  <dimen name="account_checkbox">12sp</dimen>
 
-  <dimen name="AppBarHeight">48dp</dimen>
+  <!--Account layout-->
+  <dimen name="account_space">18dp</dimen>
+
+  <!--Feed text-->
+  
+  <!--Feed text-->
+  <dimen name="appbar_text">20sp</dimen>
+  <!--Feed layout-->
+  <dimen name="appbar_height">48dp</dimen>
+
+
+
+  <!--Settings text-->
+  <dimen name="header">14sp</dimen>
+  <dimen name="btn">12sp</dimen>
+  <!--Settings layout-->
+  <dimen name="layoutOffset">24dp</dimen>
 
 </resources>

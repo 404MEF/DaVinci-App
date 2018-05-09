@@ -38,10 +38,10 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/black"
-        android:layout_above="@+id/viewBar"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:background="@android:color/black"
+        android:layout_above="@+id/viewBar"
         android:id="@+id/divider2" />
     <LinearLayout
         android:layout_width="match_parent"

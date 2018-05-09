@@ -1,5 +1,6 @@
 ﻿using Android.Content;
 using Android.Net;
+using System.Linq;
 
 namespace Davinci.Helper
 {
@@ -13,6 +14,11 @@ namespace Davinci.Helper
                 return true;
             else
                 return false;
+        }
+
+        public static string Capitalize(this string text)
+        {
+           return text.First().ToString().ToUpper() + text.Substring(1);
         }
     }
 }

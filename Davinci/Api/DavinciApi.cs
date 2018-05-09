@@ -210,58 +210,6 @@ namespace Davinci.Api
             return await GetAsync<FeedModel>(resource, token: Token.value);
         }
 
-        public static async Task<CategoryCollectionModel> GetPopularCategories()
-        {
-            const string resource = @"category/popular";
-
-            return await GetAsync<CategoryCollectionModel>(resource, token: Token.value);
-        }
-
-        public static async Task<SearchSuggestionModel> GetSearchSuggestions(string text)
-        {
-            const string resource = @"category/autocomplete";
-
-            var parameter = new KeyValuePair<string, string>("search", text);
-
-            return await GetAsync<SearchSuggestionModel>(resource,Token.value, parameter);
-        }
-
-        public static async Task<CategoryCollectionModel> SearchCategory(string category)
-        {
-            const string resource = @"category/search";
-
-            var parameter = new KeyValuePair<string, string>("category", category);
-
-            return await GetAsync<CategoryCollectionModel>(resource, Token.value,parameter);
-        }
-
-        public static async Task<SingleCategoryModel> GetCategoryPosts(string categoryId)
-        {
-            const string resource = @"category";
-
-            var parameter = new KeyValuePair<string, string>("categoryId", categoryId);
-
-            return await GetAsync<SingleCategoryModel>(resource, Token.value,parameter);
-        }
-
-        public static async Task<FollowModel> GetFollowStatus(string categoryId)
-        {
-            const string resource = @"category/follow";
-
-            var parameter = new KeyValuePair<string, string>("categoryId", categoryId);
-
-            return await GetAsync<FollowModel>(resource, Token.value,parameter);
-        }
-
-        public static async Task<BaseApiModel> FollowCategory(string categoryId)
-        {
-            const string resource = @"category/follow";
-
-            string body = JsonConvert.SerializeObject(new { categoryId = categoryId });
-
-            return await PostAsync<BaseApiModel>(resource, body, token: Token.value);
-        }
-
         public static async Task<SinglePostModel> GetPostDetail(string postId)
         {
             const string resource = @"feed/detail";
@@ -296,6 +244,60 @@ namespace Davinci.Api
             return await GetAsync<PostCollectionModel>(resource, Token.value);
         }
 
+
+        #endregion
+        #region Category Methods
+        public static async Task<CategoryCollectionModel> GetPopularCategories()
+        {
+            const string resource = @"category/popular";
+
+            return await GetAsync<CategoryCollectionModel>(resource, token: Token.value);
+        }
+
+        public static async Task<SearchSuggestionModel> GetSearchSuggestions(string text)
+        {
+            const string resource = @"category/autocomplete";
+
+            var parameter = new KeyValuePair<string, string>("search", text.ToLower());
+
+            return await GetAsync<SearchSuggestionModel>(resource, Token.value, parameter);
+        }
+
+        public static async Task<CategoryCollectionModel> SearchCategory(string category)
+        {
+            const string resource = @"category/search";
+
+            var parameter = new KeyValuePair<string, string>("category", category.ToLower());
+
+            return await GetAsync<CategoryCollectionModel>(resource, Token.value, parameter);
+        }
+
+        public static async Task<SingleCategoryModel> GetCategoryPosts(string categoryId)
+        {
+            const string resource = @"category";
+
+            var parameter = new KeyValuePair<string, string>("categoryId", categoryId);
+
+            return await GetAsync<SingleCategoryModel>(resource, Token.value, parameter);
+        }
+
+        public static async Task<FollowModel> GetFollowStatus(string categoryId)
+        {
+            const string resource = @"category/follow";
+
+            var parameter = new KeyValuePair<string, string>("categoryId", categoryId);
+
+            return await GetAsync<FollowModel>(resource, Token.value, parameter);
+        }
+
+        public static async Task<BaseApiModel> FollowCategory(string categoryId)
+        {
+            const string resource = @"category/follow";
+
+            string body = JsonConvert.SerializeObject(new { categoryId = categoryId });
+
+            return await PostAsync<BaseApiModel>(resource, body, token: Token.value);
+        }
 
         #endregion
     }

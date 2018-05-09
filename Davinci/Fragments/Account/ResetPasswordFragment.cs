@@ -20,16 +20,24 @@ namespace Davinci.Fragments.Account
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
-            usernameField = view.FindViewById<EditText>(Resource.Id.Reset_usernameField);
-
-            resetButton = view.FindViewById<Button>(Resource.Id.Reset_resetButton);
-
-            resetButton.Click += (s, e) => Reset();
+            setUI();
+            setEvents();
         }
 
-        private void Reset()
+        private void setUI()
         {
-            bool isValid = ValidateInput();
+            usernameField = View.FindViewById<EditText>(Resource.Id.Reset_usernameField);
+            resetButton = View.FindViewById<Button>(Resource.Id.Reset_resetButton);
+        }
+
+        private void setEvents()
+        {
+            resetButton.Click += (s, e) => resetPassword();
+        }
+
+        private void resetPassword()
+        {
+            bool isValid = validateInput();
 
             if (!isValid)
                 return;
@@ -53,7 +61,7 @@ namespace Davinci.Fragments.Account
             }
         }
 
-        private bool ValidateInput()
+        private bool validateInput()
         {
             if (string.IsNullOrEmpty(usernameField.Text))
             {
@@ -64,7 +72,5 @@ namespace Davinci.Fragments.Account
 
             return true;
         }
-
-
     }
 }

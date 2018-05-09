@@ -13,7 +13,6 @@ namespace Davinci.Fragments
             base.OnCreate(savedInstanceState);
 
             parentActivity = (BaseActivity)Activity;
-
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

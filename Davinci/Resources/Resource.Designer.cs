@@ -1988,33 +1988,6 @@ namespace Davinci
 		public partial class Dimension
 		{
 			
-			// aapt resource value: 0x7f0900b4
-			public const int AccountActivity_Button_Margin = 2131296436;
-			
-			// aapt resource value: 0x7f0900b5
-			public const int AccountActivity_Button_Text = 2131296437;
-			
-			// aapt resource value: 0x7f0900af
-			public const int AccountActivity_Description_Margin = 2131296431;
-			
-			// aapt resource value: 0x7f0900b0
-			public const int AccountActivity_Description_Text = 2131296432;
-			
-			// aapt resource value: 0x7f0900b2
-			public const int AccountActivity_Input_Margin = 2131296434;
-			
-			// aapt resource value: 0x7f0900b3
-			public const int AccountActivity_Input_Text = 2131296435;
-			
-			// aapt resource value: 0x7f0900b1
-			public const int AccountActivity_Space = 2131296433;
-			
-			// aapt resource value: 0x7f0900ae
-			public const int AccountActivity_Title_Text = 2131296430;
-			
-			// aapt resource value: 0x7f0900b6
-			public const int AppBarHeight = 2131296438;
-			
 			// aapt resource value: 0x7f09001c
 			public const int abc_action_bar_content_inset_material = 2131296284;
 			
@@ -2237,6 +2210,33 @@ namespace Davinci
 			// aapt resource value: 0x7f090014
 			public const int abc_text_size_title_material_toolbar = 2131296276;
 			
+			// aapt resource value: 0x7f0900b1
+			public const int account_btn = 2131296433;
+			
+			// aapt resource value: 0x7f0900b2
+			public const int account_checkbox = 2131296434;
+			
+			// aapt resource value: 0x7f0900af
+			public const int account_description = 2131296431;
+			
+			// aapt resource value: 0x7f0900b0
+			public const int account_input = 2131296432;
+			
+			// aapt resource value: 0x7f0900b3
+			public const int account_space = 2131296435;
+			
+			// aapt resource value: 0x7f0900ae
+			public const int account_title = 2131296430;
+			
+			// aapt resource value: 0x7f0900b5
+			public const int appbar_height = 2131296437;
+			
+			// aapt resource value: 0x7f0900b4
+			public const int appbar_text = 2131296436;
+			
+			// aapt resource value: 0x7f0900b7
+			public const int btn = 2131296439;
+			
 			// aapt resource value: 0x7f090000
 			public const int cardview_compat_inset_shadow = 2131296256;
 			
@@ -2411,6 +2411,9 @@ namespace Davinci
 			// aapt resource value: 0x7f090005
 			public const int fastscroll_minimum_range = 2131296261;
 			
+			// aapt resource value: 0x7f0900b6
+			public const int header = 2131296438;
+			
 			// aapt resource value: 0x7f09005c
 			public const int highlight_alpha_material_colored = 2131296348;
 			
@@ -2443,6 +2446,9 @@ namespace Davinci
 			
 			// aapt resource value: 0x7f0900ad
 			public const int layer_padding = 2131296429;
+			
+			// aapt resource value: 0x7f0900b8
+			public const int layoutOffset = 2131296440;
 			
 			// aapt resource value: 0x7f090009
 			public const int mr_controller_volume_group_list_item_height = 2131296265;
@@ -4959,7 +4965,7 @@ namespace Davinci
 		{
 			
 			// aapt resource value: 0x7f0e0000
-			public const int category_toolbar_menu = 2131623936;
+			public const int activity_toolbar_menu = 2131623936;
 			
 			// aapt resource value: 0x7f0e0001
 			public const int feed_bottom_menu = 2131623937;
@@ -6142,11 +6148,14 @@ namespace Davinci
 			// aapt resource value: 0x7f0701ab
 			public const int SettingsActivity_SettingButton = 2131165611;
 			
-			// aapt resource value: 0x7f0701ac
-			public const int SettingsActivity_SettingDivider = 2131165612;
-			
 			// aapt resource value: 0x7f0701aa
 			public const int SettingsActivity_SubLabel = 2131165610;
+			
+			// aapt resource value: 0x7f0701ac
+			public const int SettingsActivity_editText = 2131165612;
+			
+			// aapt resource value: 0x7f0701ad
+			public const int SettingsActivity_layout = 2131165613;
 			
 			// aapt resource value: 0x7f0700de
 			public const int TextAppearance_AppCompat = 2131165406;

@@ -25,25 +25,35 @@ namespace Davinci.Fragments.Account
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
-            usernameField = view.FindViewById<EditText>(Resource.Id.Login_usernameField);
-            passwordField = view.FindViewById<EditText>(Resource.Id.Login_passwordField);
-            rememberBox = view.FindViewById<CheckBox>(Resource.Id.Login_rememberChk);
-
-            loginBtn = view.FindViewById<Button>(Resource.Id.Login_loginButton);
-            registerBtn = view.FindViewById<Button>(Resource.Id.Login_registerButton);
-            resetBtn = view.FindViewById<Button>(Resource.Id.Login_forgetButton);
+            setUI();
+            setEvents();
 
             var prefs = PreferenceManager.GetDefaultSharedPreferences(Application.Context);
             var username = prefs.GetString(GetString(Resource.String.username), string.Empty);
             usernameField.Text = username;
-
-            loginBtn.Click += (s, e) => Authenticate();
-            registerBtn.Click += (s, e) => ((AccountActivity)parentActivity).Register();
-            resetBtn.Click += (s, e) => ((AccountActivity)parentActivity).Reset();
             
         }
 
-        private void Authenticate()
+        private void setUI()
+        {
+            usernameField = View.FindViewById<EditText>(Resource.Id.Login_usernameField);
+            passwordField = View.FindViewById<EditText>(Resource.Id.Login_passwordField);
+            rememberBox = View.FindViewById<CheckBox>(Resource.Id.Login_rememberChk);
+
+            loginBtn = View.FindViewById<Button>(Resource.Id.Login_loginButton);
+            registerBtn = View.FindViewById<Button>(Resource.Id.Login_registerButton);
+            resetBtn = View.FindViewById<Button>(Resource.Id.Login_forgetButton);
+
+        }
+
+        private void setEvents()
+        {
+            loginBtn.Click += (s, e) => authenticate();
+            registerBtn.Click += (s, e) => ((AccountActivity)parentActivity).Register();
+            resetBtn.Click += (s, e) => ((AccountActivity)parentActivity).Reset();
+        }
+
+        private void authenticate()
         {
             bool isValid = validateInput();
 
@@ -75,7 +85,7 @@ namespace Davinci.Fragments.Account
 
                     await Task.Delay(500);
 
-                    Feed();
+                    showFeed();
                 }
                 else
                 {
@@ -130,7 +140,7 @@ namespace Davinci.Fragments.Account
             prefsEdit.Apply();
         }
 
-        private void Feed()
+        private void showFeed()
         {
             StartActivity(new Intent(Application.Context, typeof(FeedActivity)));
             parentActivity.Finish();

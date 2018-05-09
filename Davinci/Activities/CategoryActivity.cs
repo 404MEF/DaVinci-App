@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Support.V7.Widget;
-using Android.Views.Animations;
-using System.Threading.Tasks;
-using Davinci.Api.Models;
+
 using Davinci.Adapters.Feed;
-using Davinci.Activities;
 using Davinci.Fragments.Feed;
-using Davinci.Adapters.Search;
 
 namespace Davinci.Activities
 {
     [Activity(Theme = "@style/DavinciTheme.Feed", WindowSoftInputMode = SoftInput.AdjustPan, NoHistory = true)]
     public class CategoryActivity : ToolbarActivity
     {
+        private const int COLUMN_COUNT = 4;
+        private string id;
+
         TextView imageCount;
         Button followBtn;
 
@@ -33,60 +29,50 @@ namespace Davinci.Activities
         {
             base.OnCreate(savedInstanceState);
 
-            SetContentView(Resource.Layout.Category);
-
-            string id = Intent.GetStringExtra("id");
+            id = Intent.GetStringExtra("id");
             string name = Intent.GetStringExtra("name");
             int count = Intent.GetIntExtra("count", 0);
 
             string categoryHeader = "#" + name.First().ToString().ToUpper() + name.Substring(1);
 
+            SetContentView(Resource.Layout.Category);
             SetActionBar(categoryHeader);
 
-            imageCount = FindViewById<TextView>(Resource.Id.imageCountField);
+            setUI();
+            setEvents();
 
             imageCount.Text = count.ToString() + " Images";
 
-            followBtn = FindViewById<Button>(Resource.Id.followBtn);
-            followBtn.Click += (s, e) => follow(id);
-
-            viewManager = new GridLayoutManager(this, 4);
-
-            recyclerView = FindViewById<RecyclerView>(Resource.Id.categoryRecyclerView);
             recyclerView.HasFixedSize = true;
             recyclerView.SetLayoutManager(viewManager);
 
-            getFollowStatus(id);
-            getPosts(id);
+            getFollowStatus();
+            getPosts();
         }
 
-
-        public override bool OnCreateOptionsMenu(IMenu menu)
+        private void setUI()
         {
-            MenuInflater.Inflate(Resource.Menu.category_toolbar_menu, menu);
-            return true;
+            imageCount = FindViewById<TextView>(Resource.Id.imageCountField);
+            followBtn = FindViewById<Button>(Resource.Id.followBtn);
+            viewManager = new GridLayoutManager(this, COLUMN_COUNT);
+            recyclerView = FindViewById<RecyclerView>(Resource.Id.categoryRecyclerView);
         }
 
-        public override bool OnOptionsItemSelected(IMenuItem item)
+        private void setEvents()
         {
-            switch (item.ItemId)
-            {
-                case Resource.Id.menu_close:
-                    this.Finish();
-                    return true;
-            }
-
-            return base.OnOptionsItemSelected(item);
+            followBtn.Click += (s, e) => follow();
         }
 
-        private void follow(string id)
+        private void follow()
         {
             Task.Run(async () =>
             {
-                var response = await Api.DavinciApi.FollowCategory(id);
-                return response;
+                return await Api.DavinciApi.FollowCategory(id);
             }).ContinueWith(t =>
             {
+                if (t.Status == TaskStatus.Canceled)
+                    return;
+
                 if (t.Result.OK)
                 {
                     if (followBtn.Text == "Unfollow")
@@ -101,35 +87,38 @@ namespace Davinci.Activities
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private void getFollowStatus(string id)
+        private void getFollowStatus()
         {
             Task.Run(async () =>
             {
-                FollowModel followModel = await Api.DavinciApi.GetFollowStatus(id);
-                return followModel;
+                return await Api.DavinciApi.GetFollowStatus(id);
             }).ContinueWith(t =>
             {
-                int followStatus = t.Result.follow;
-                if (followStatus == 1)
+                if (t.Status == TaskStatus.Canceled)
+                    return;
+
+                if (t.Result.OK)
                 {
-                    followBtn.Text = "Unfollow";
+                    int followStatus = t.Result.follow;
+                    if (followStatus == 1)
+                        followBtn.Text = "Unfollow";
+                    else
+                        followBtn.Text = "Follow";
                 }
-                else
-                {
-                    followBtn.Text = "Follow";
-                }
-=            }, TaskScheduler.FromCurrentSynchronizationContext());
+            },TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private void getPosts(string id)
+        private void getPosts()
         {
             Task.Run(async () =>
             {
-                SingleCategoryModel postCollection = await Api.DavinciApi.GetCategoryPosts(id);
-                return postCollection;
+                return await Api.DavinciApi.GetCategoryPosts(id);
             }).ContinueWith(t =>
             {
-                RunOnUiThread(() =>
+                if (t.Status == TaskStatus.Canceled)
+                    return;
+
+                if (t.Result.OK)
                 {
                     var viewAdapter = new CategoryGridAdapter(t.Result.category.posts);
                     viewAdapter.ItemClick += (p) =>
@@ -138,9 +127,26 @@ namespace Davinci.Activities
                         postFragment.Show(SupportFragmentManager, "post");
                     };
                     recyclerView.SetAdapter(viewAdapter);
-
-                });
+                }
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.activity_toolbar_menu, menu);
+            return true;
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.menu_close:
+                    this.Finish();
+                    return true;
+            }
+
+            return base.OnOptionsItemSelected(item);
         }
     }
 }

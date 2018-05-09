@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Threading.Tasks;
 
-using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Support.V7.Widget;
-using System.Threading.Tasks;
-using Davinci.Api.Models;
+
 using Davinci.Adapters.Feed;
 
 namespace Davinci.Fragments.Feed
 {
     class ProfileFragment : BaseFragment
     {
-        TextView likesHeader, postsHeader;
+        private const int COLUMN_COUNT = 4;
 
+        TextView likesHeader, postsHeader;
         RecyclerView likesRecyclerView, postsRecyclerView;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -31,18 +25,30 @@ namespace Davinci.Fragments.Feed
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            likesHeader = view.FindViewById<TextView>(Resource.Id.likeHeader);
-            postsHeader = view.FindViewById<TextView>(Resource.Id.postHeader);
-            likesRecyclerView = view.FindViewById<RecyclerView>(Resource.Id.likesRecyclerView);
-            postsRecyclerView = view.FindViewById<RecyclerView>(Resource.Id.postsRecyclerView);
+            setUI();
+            setEvents();
 
-            var likesLayoutManager = new GridLayoutManager(this.Context, 4);
-            var postsLayoutManager = new GridLayoutManager(this.Context, 4);
+            getProfilePosts();
+        }
+
+        private void setUI()
+        {
+            likesHeader = View.FindViewById<TextView>(Resource.Id.likeHeader);
+            postsHeader = View.FindViewById<TextView>(Resource.Id.postHeader);
+            likesRecyclerView = View.FindViewById<RecyclerView>(Resource.Id.likesRecyclerView);
+            postsRecyclerView = View.FindViewById<RecyclerView>(Resource.Id.postsRecyclerView);
+
+            var likesLayoutManager = new GridLayoutManager(this.Context, COLUMN_COUNT);
+            var postsLayoutManager = new GridLayoutManager(this.Context, COLUMN_COUNT);
 
             likesRecyclerView.SetLayoutManager(likesLayoutManager);
             postsRecyclerView.SetLayoutManager(postsLayoutManager);
 
-            getProfilePosts();
+        }
+
+        private void setEvents()
+        {
+
         }
 
         private void getProfilePosts()
@@ -52,6 +58,9 @@ namespace Davinci.Fragments.Feed
                 return await Api.DavinciApi.GetProfilePosts();
             }).ContinueWith(t =>
             {
+                if (t.Status == TaskStatus.Canceled)
+                    return;
+
                 if (t.Result.OK)
                 {
                     CategoryGridAdapter adapter = new CategoryGridAdapter(t.Result.posts);

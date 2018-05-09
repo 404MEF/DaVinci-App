@@ -1,21 +1,19 @@
 ﻿using System.Threading.Tasks;
+using System.Linq;
 
 using Android.OS;
 using Android.Graphics;
 using Android.Views;
-using Android.Views.Animations;
+using Android.Widget;
+using Android.Content;
+using Android.App;
 using Android.Support.V4.Widget;
 using Android.Support.V7.Widget;
 
 using Davinci.Adapters.Feed;
-using Davinci.Api.Models;
 using Davinci.Activities;
-using System.Linq;
-using Android.Widget;
+
 using Refractored.Fab;
-using Android.Content;
-using Android.App;
-using Davinci.Adapters;
 
 namespace Davinci.Fragments.Feed
 {
@@ -40,42 +38,55 @@ namespace Davinci.Fragments.Feed
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            scrollView = view.FindViewById<ScrollView>(Resource.Id.scrollView);
-            recyclerView = view.FindViewById<RecyclerView>(Resource.Id.recyclerView);
+            setUI();
+            setEvents();
 
-            noContentTextView = view.FindViewById<TextView>(Resource.Id.noContent);
 
-            fab = view.FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.AttachToRecyclerView(recyclerView);
-            fab.Click += (s, e) => parentActivity.StartActivity(new Intent(Application.Context, typeof(UploadActivity)));
 
-            swipeRefreshLayout = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swipeRefreshLayout);
             swipeRefreshLayout.SetColorSchemeColors(Color.IndianRed, Color.LimeGreen, Color.AliceBlue, Color.LightGoldenrodYellow);
-            swipeRefreshLayout.Refresh += (s, e) => getPosts(0);
-
-            ((ToolbarActivity)parentActivity).ToolBar.Click += (s, e) => scrollView.ScrollTo(0, 0);
-
-            viewManager = new LinearLayoutManager(Context);
-            var scrollListener = new EndlessScrollListener(viewManager);
-
+ 
+            //var scrollListener = new EndlessScrollListener(viewManager);
             recyclerView.HasFixedSize = true;
             recyclerView.NestedScrollingEnabled = false;
             recyclerView.SetLayoutManager(viewManager);
-            recyclerView.AddOnScrollListener(scrollListener);
+            //recyclerView.AddOnScrollListener(scrollListener);
+            //scrollListener.OnEndReach += (e) => getPosts(e);
 
             getPosts(0);
-            //scrollListener.OnEndReach += (e) => getPosts(e);
+        }
+
+        private void setUI()
+        {
+            scrollView = View.FindViewById<ScrollView>(Resource.Id.scrollView);
+            noContentTextView = View.FindViewById<TextView>(Resource.Id.noContent);
+            fab = View.FindViewById<FloatingActionButton>(Resource.Id.fab);
+            swipeRefreshLayout = View.FindViewById<SwipeRefreshLayout>(Resource.Id.swipeRefreshLayout);
+
+            recyclerView = View.FindViewById<RecyclerView>(Resource.Id.recyclerView);
+            viewManager = new LinearLayoutManager(Context);
+        }
+
+        private void setEvents()
+        {
+            //Start upload activity when fab is clicked
+            fab.Click += (s, e) => parentActivity.StartActivity(new Intent(Application.Context, typeof(UploadActivity)));
+
+            //Scroll to top
+            ((ToolbarActivity)parentActivity).ToolBar.Click += (s, e) => scrollView.ScrollTo(0, 0);
+
+            //Refresh posts
+            swipeRefreshLayout.Refresh += (s, e) => getPosts(0);
         }
 
         private void getPosts(int page)
         {
             Task.Run(async () =>
             {
-                FeedModel postCollection = await Api.DavinciApi.GetFeedPosts(page);
-                return postCollection;
+                return await Api.DavinciApi.GetFeedPosts(page);
             }).ContinueWith(t =>
             {
-                if (t.Result.data.follows.Count == 0)
+                if (t.Status == TaskStatus.Canceled || t.Result.data.follows.Count == 0)
                 {
                     noContentTextView.Visibility = ViewStates.Visible;
                 }
@@ -101,6 +112,5 @@ namespace Davinci.Fragments.Feed
                 swipeRefreshLayout.Refreshing = false;
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
-
     }
 }

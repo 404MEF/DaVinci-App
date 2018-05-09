@@ -5,15 +5,17 @@ using Android.Widget;
 using Android.App;
 using Android.Graphics;
 using Android.Util;
+using DialogFragment = Android.Support.V4.App.DialogFragment;
 
 using Davinci.Api.Models;
 using Davinci.Components;
-using DialogFragment = Android.Support.V4.App.DialogFragment;
 
 namespace Davinci.Fragments.Feed
 {
     class PostFragment : DialogFragment
     {
+        private string id;
+
         TextView headerTextView, detailTextView;
         ImageView imageView;
         Button likeBtn, dislikeBtn;
@@ -27,7 +29,6 @@ namespace Davinci.Fragments.Feed
             fragment.Arguments = args;
             return fragment;
         }
-
 
         public override void OnActivityCreated(Bundle savedInstanceState)
         {
@@ -43,20 +44,28 @@ namespace Davinci.Fragments.Feed
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
+            id = Arguments.GetString("id");
 
-            string id = Arguments.GetString("id");
+            setUI();
+            setEvents();
 
-            headerTextView = view.FindViewById<TextView>(Resource.Id.categoryText);
-            detailTextView = view.FindViewById<TextView>(Resource.Id.detailText);
-            likeBtn = view.FindViewById<Button>(Resource.Id.likeBtn);
-            dislikeBtn = view.FindViewById<Button>(Resource.Id.dislikeBtn);
-            ratioBar = view.FindViewById<LikeRatioBar>(Resource.Id.ratioBar);
-            imageView = view.FindViewById<SquareImageView>(Resource.Id.imageView);
+            getPostDetails();
+        }
 
+        private void setUI()
+        {
+            headerTextView = View.FindViewById<TextView>(Resource.Id.categoryText);
+            detailTextView = View.FindViewById<TextView>(Resource.Id.detailText);
+            likeBtn = View.FindViewById<Button>(Resource.Id.likeBtn);
+            dislikeBtn = View.FindViewById<Button>(Resource.Id.dislikeBtn);
+            ratioBar = View.FindViewById<LikeRatioBar>(Resource.Id.ratioBar);
+            imageView = View.FindViewById<SquareImageView>(Resource.Id.imageView);
+        }
+
+        private void setEvents()
+        {
             likeBtn.Click += (s, e) => sendVote(id, 1);
             dislikeBtn.Click += (s, e) => sendVote(id, -1);
-
-            getPostDetails(id);
         }
 
         private void setVoteButtonState(int vote)
@@ -87,7 +96,7 @@ namespace Davinci.Fragments.Feed
             }
         }
 
-        private void getPostDetails(string id)
+        private void getPostDetails()
         {
             Task.Run(async () =>
             {
@@ -108,7 +117,7 @@ namespace Davinci.Fragments.Feed
                 var imageData = Base64.Decode(t.Result.p.post.image, Base64Flags.Default);
                 var bitmap = BitmapFactory.DecodeByteArray(imageData, 0, imageData.Length);
 
-               imageView.SetImageBitmap(bitmap);
+                imageView.SetImageBitmap(bitmap);
 
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
@@ -132,7 +141,7 @@ namespace Davinci.Fragments.Feed
                 {
                     setVoteButtonState(vote);
 
-                    ratioBar.SetRatio(getLikeRatio(t.Result.likes,t.Result.dislikes));
+                    ratioBar.SetRatio(getLikeRatio(t.Result.likes, t.Result.dislikes));
                 }
                 else
                 {

@@ -1,4 +1,5 @@
-﻿using Toolbar = Android.Support.V7.Widget.Toolbar;
+﻿using Android.Widget;
+using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace Davinci.Activities
 {
@@ -6,18 +7,13 @@ namespace Davinci.Activities
     {
         public Toolbar ToolBar { get; private set; }
 
-        protected void SetActionBar(string title)
+        protected void SetActionBar(string title = "Davinci")
         {
             ToolBar = FindViewById<Toolbar>(Resource.Id.actionBar);
-            ToolBar.Title = title;
+            ToolBar.FindViewById<TextView>(Resource.Id.actionBarTitle).Text = title;
             SetSupportActionBar(ToolBar);
             SupportActionBar.SetDisplayShowTitleEnabled(false);
         }
 
-        public void SetTitle(string title)
-        {
-            if (this.ToolBar != null)
-                this.ToolBar.Title = title;
-        }
     }
 }

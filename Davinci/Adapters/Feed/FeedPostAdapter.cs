@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System;
+using System.Globalization;
 
 using Android.Views;
 using Android.Widget;
@@ -9,9 +12,8 @@ using Android.Graphics;
 
 using Davinci.Api.Models;
 using Davinci.Components;
-using System.Threading.Tasks;
-using System;
-using System.Globalization;
+using Davinci.Helper;
+
 
 namespace Davinci.Adapters.Feed
 {
@@ -21,8 +23,7 @@ namespace Davinci.Adapters.Feed
 
         public FeedPostAdapter(FeedModel model)
         {
-            var posts = model.data.follows.SelectMany(n => n.posts).OrderBy(k => DateTime.ParseExact(k.createdAt.Split('T')[0], "yyyy-MM-dd", CultureInfo.InvariantCulture)).ToList();
-            this.items = 
+            this.items = model.data.follows.SelectMany(n => n.posts).OrderBy(k => DateTime.ParseExact(k.createdAt.Split('T')[0], "yyyy-MM-dd", CultureInfo.InvariantCulture)).ToList();
         }
 
         public override int ItemCount
@@ -50,7 +51,7 @@ namespace Davinci.Adapters.Feed
             var viewHolder = holder as FeedItemAdapterViewHolder;
 
             var ownerText = string.Format("Uploaded by {0} at {1}", item.owner.username, item.createdAt.Split('T')[0]);
-            var categoryText = "#" + item.category.name.First().ToString().ToUpper() + item.category.name.Substring(1);
+            var categoryText = "#" + item.category.name.Capitalize();
 
             viewHolder.Owner.Text = ownerText;
             viewHolder.Category.Text = categoryText;
@@ -89,7 +90,7 @@ namespace Davinci.Adapters.Feed
                 return await Api.DavinciApi.VotePost(item._id, vote);
             }).ContinueWith(t =>
             {
-                if (t.Result.OK)
+                if (t.Status != TaskStatus.Canceled && t.Result.OK)
                 {
                     item.likes = t.Result.likes;
                     item.dislikes = t.Result.dislikes;

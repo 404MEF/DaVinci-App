@@ -5,7 +5,6 @@ using Android.Views;
 using Android.Widget;
 
 using Davinci.Api;
-using Davinci.Api.Models;
 using Davinci.Activities;
 
 namespace Davinci.Fragments.Account
@@ -22,17 +21,25 @@ namespace Davinci.Fragments.Account
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
-            usernameField = view.FindViewById<EditText>(Resource.Id.Register_usernameField);
-            emailField = view.FindViewById<EditText>(Resource.Id.Register_emailField);
-            passwordField = view.FindViewById<EditText>(Resource.Id.Register_passwordField);
-            passwordConfirmField = view.FindViewById<EditText>(Resource.Id.Register_passwordConfirmField);
-
-            registerBtn = view.FindViewById<Button>(Resource.Id.Register_registerButton);
-
-            registerBtn.Click += (s, e) => Register();
+            setUI();
+            setEvents();
         }
 
-        private void Register()
+        private void setUI()
+        {
+            usernameField = View.FindViewById<EditText>(Resource.Id.Register_usernameField);
+            emailField = View.FindViewById<EditText>(Resource.Id.Register_emailField);
+            passwordField = View.FindViewById<EditText>(Resource.Id.Register_passwordField);
+            passwordConfirmField = View.FindViewById<EditText>(Resource.Id.Register_passwordConfirmField);
+            registerBtn = View.FindViewById<Button>(Resource.Id.Register_registerButton);
+        }
+
+        private void setEvents()
+        {
+            registerBtn.Click += (s, e) => register();
+        }
+
+        private void register()
         {
             bool isValid = validateInput();
 
@@ -122,6 +129,5 @@ namespace Davinci.Fragments.Account
 
             return true;
         }
-
     }
 }
