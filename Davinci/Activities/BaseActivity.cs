@@ -61,6 +61,8 @@ namespace Davinci
 
             fragmentStack.Push(currentFragment);
             currentFragment = fragment;
+
+            fragment.OnViewTrigger();
         }
 
         public void ClearStack()

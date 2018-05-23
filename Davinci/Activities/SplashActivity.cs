@@ -39,15 +39,12 @@ namespace Davinci.Activities
             {
                 Task.Run(async () =>
                 {
-                    var auth = await Api.DavinciApi.Authenticate(username, userpassword);
-                    return auth;
-                }).ContinueWith(authTask =>
+                    return await Api.DavinciApi.Authenticate(username, userpassword);
+                }).ContinueWith(t =>
                 {
-                    var auth = authTask.Result;
-
-                    if (authTask.Status == TaskStatus.Canceled)
+                    if (t.Status == TaskStatus.Canceled)
                         StartActivity(new Intent(Application.Context, typeof(AccountActivity)));
-                    else if (auth.OK)
+                    else if (t.Result.OK)
                         StartActivity(new Intent(Application.Context, typeof(FeedActivity)));
                     else
                         StartActivity(new Intent(Application.Context, typeof(AccountActivity)));

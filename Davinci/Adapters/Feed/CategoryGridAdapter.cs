@@ -8,6 +8,7 @@ using Android.Graphics;
 
 using Davinci.Api.Models;
 using System;
+using Davinci.Components;
 
 namespace Davinci.Adapters.Feed
 {
@@ -65,10 +66,10 @@ namespace Davinci.Adapters.Feed
 
     public class CategoryItemAdapterViewHolder : RecyclerView.ViewHolder
     {
-        public ImageView Image { get; private set; }
+        public SquareImageView Image { get; private set; }
         public CategoryItemAdapterViewHolder(View itemView, List<PostModel> items, Action<PostModel> listener) : base(itemView)
         {
-            Image = itemView.FindViewById<ImageView>(Resource.Id.gridImageView);
+            Image = itemView.FindViewById<SquareImageView>(Resource.Id.gridImageView);
 
             itemView.Click += (sender, e) => listener(items[base.Position]);
 

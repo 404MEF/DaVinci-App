@@ -23,7 +23,9 @@ namespace Davinci.Adapters.Feed
 
         public FeedPostAdapter(FeedModel model)
         {
-            this.items = model.data.follows.SelectMany(n => n.posts).OrderBy(k => DateTime.ParseExact(k.createdAt.Split('T')[0], "yyyy-MM-dd", CultureInfo.InvariantCulture)).ToList();
+            var postSelect = model.data.follows.SelectMany(n => n.posts).Reverse();
+            //postSelect = postSelect.OrderByDescending(n => DateTime.ParseExact(n.createdAt.Substring(0,10),"yyyy-MM-dd",CultureInfo.InvariantCulture));
+            this.items = postSelect.ToList();
         }
 
         public override int ItemCount
@@ -41,7 +43,7 @@ namespace Davinci.Adapters.Feed
 
         public void Add(IEnumerable<PostModel> item)
         {
-            items.AddRange(item);
+            items.AddRange(item.Reverse());
         }
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)

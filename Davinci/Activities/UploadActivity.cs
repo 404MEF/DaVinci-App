@@ -148,7 +148,7 @@ namespace Davinci.Activities
                 if (response.OK)
                 {
                     uploadBtn.setProgress(100);
-                    await Task.Delay(1000);
+                    await Task.Delay(2000);
                     this.Finish();
                 }
 

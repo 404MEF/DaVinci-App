@@ -12,8 +12,7 @@ using Android.Support.V7.Widget;
 
 using Davinci.Adapters.Feed;
 using Davinci.Activities;
-
-using Refractored.Fab;
+using Android.Support.Design.Widget;
 
 namespace Davinci.Fragments.Feed
 {
@@ -41,14 +40,11 @@ namespace Davinci.Fragments.Feed
             setUI();
             setEvents();
 
-
-            fab.AttachToRecyclerView(recyclerView);
-
             swipeRefreshLayout.SetColorSchemeColors(Color.IndianRed, Color.LimeGreen, Color.AliceBlue, Color.LightGoldenrodYellow);
  
             //var scrollListener = new EndlessScrollListener(viewManager);
             recyclerView.HasFixedSize = true;
-            recyclerView.NestedScrollingEnabled = false;
+            recyclerView.NestedScrollingEnabled = true;
             recyclerView.SetLayoutManager(viewManager);
             //recyclerView.AddOnScrollListener(scrollListener);
             //scrollListener.OnEndReach += (e) => getPosts(e);

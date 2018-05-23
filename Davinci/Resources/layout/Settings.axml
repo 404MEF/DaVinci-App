@@ -3,29 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-  <include
-      layout="@layout/ActionBar" />
-  <LinearLayout
-      android:orientation="vertical"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      style="@style/SettingsActivity_layout"
-      android:layout_marginTop="@dimen/appbar_height">
-    <TextView
-        style="@style/SettingsActivity_CategoryLabel"
-        android:text="Account Settings" />
-    <View
-        style="@style/SettingsActivity_CategoryDivider" />
-    <Button
-        style="@style/SettingsActivity_SettingButton"
-        android:text="Change password" />
-    <Button
-        style="@style/SettingsActivity_SettingButton"
-        android:text="Change email address" />
-    <Button
-        style="@style/SettingsActivity_SettingButton"
-        android:text="Change username" />
-    <TextView
+    <include
+        layout="@layout/ActionBar" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/SettingsActivity_layout"
+        android:layout_marginTop="@dimen/appbar_height">
+        <TextView
+            style="@style/SettingsActivity_CategoryLabel"
+            android:text="Account Settings" />
+        <View
+            style="@style/SettingsActivity_CategoryDivider" />
+        <Button
+            style="@style/SettingsActivity_SettingButton"
+            android:id="@+id/changePasswordBtn"
+            android:text="Change password" />
+        <Button
+            style="@style/SettingsActivity_SettingButton"
+            android:id="@+id/changeEmailBtn"
+            android:text="Change email address" />
+        <Button
+            style="@style/SettingsActivity_SettingButton"
+            android:id="@+id/changeUsernameBtn"
+            android:text="Change username" />
+        <Button
+            android:id="@+id/deleteAccountBtn"
+            android:background="#D32F2F"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="Delete my account"
+            android:textSize="12sp"
+            android:textColor="@android:color/white"
+            android:minHeight="28dp"
+            android:layout_marginTop="8dp" />
+    <!--<TextView
         style="@style/SettingsActivity_CategoryLabel"
         android:text="Profile Settings" />
     <View
@@ -35,25 +49,23 @@
         android:text="Edit personal information" />
     <Button
         style="@style/SettingsActivity_SettingButton"
-        android:text="Privacy settings" />
-    <TextView
-        style="@style/SettingsActivity_CategoryLabel"
-        android:text="Application Settings" />
-    <View
-        style="@style/SettingsActivity_CategoryDivider" />
-    <Button
-        style="@style/SettingsActivity_SettingButton"
-        android:text="Notification Settings" />
-    <Button
-        android:id="@+id/Settings_logoutButton"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:text="Sign out"
-        android:layout_marginTop="18dp"
-        android:textSize="12dp"
-        android:background="#D32F2F"
-        android:textColor="#212121"
-        android:drawablePadding="-32dp"
-        android:paddingLeft="8dp" />
-  </LinearLayout>
+        android:text="Privacy settings" />-->
+        <TextView
+            style="@style/SettingsActivity_CategoryLabel"
+            android:text="Application Settings" />
+        <View
+            style="@style/SettingsActivity_CategoryDivider" />
+        <Button
+            style="@style/SettingsActivity_SettingButton"
+            android:text="Notification Settings" />
+        <Button
+            android:id="@+id/Settings_logoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:text="Sign out"
+            android:layout_marginTop="12dp"
+            android:textSize="12sp"
+            android:background="#D32F2F"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 </FrameLayout>

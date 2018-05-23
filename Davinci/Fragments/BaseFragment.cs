@@ -1,4 +1,6 @@
-﻿using Android.OS;
+﻿using System;
+
+using Android.OS;
 using Android.Support.V4.App;
 using Android.Views;
 
@@ -20,7 +22,13 @@ namespace Davinci.Fragments
             return base.OnCreateView(inflater, container, savedInstanceState);
         }
 
-        protected void RunOnUIThread(System.Action action)
+        //Triggered when shown by fragment manager
+        public virtual void OnViewTrigger()
+        {
+            //onViewTrigger
+        }
+
+        protected void RunOnUiThread(Action action)
         {
             parentActivity.RunOnUiThread(action);
         }

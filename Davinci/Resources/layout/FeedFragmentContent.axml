@@ -11,7 +11,7 @@
       android:layout_marginTop="8dp"
       android:layout_marginBottom="8dp"
       android:text="Swipe down to refresh"
-      android:textSize="12dp"
+      android:textSize="12sp"
       android:gravity="center" />
   <android.support.v7.widget.RecyclerView
       android:id="@+id/recyclerView"
@@ -27,7 +27,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="16dp"
       android:text="No content."
-      android:textSize="16sp"
+      android:textSize="14sp"
       android:gravity="center"
       android:visibility="gone" />
 </LinearLayout>

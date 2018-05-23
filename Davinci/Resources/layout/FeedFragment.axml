@@ -11,18 +11,15 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-      <include
-          layout="@layout/FeedFragmentContent" />
+      <include layout="@layout/FeedFragmentContent" />
     </ScrollView>
   </android.support.v4.widget.SwipeRefreshLayout>
-  <Refractored.Fab.FloatingActionButton
+  <android.support.design.widget.FloatingActionButton
       android:id="@+id/fab"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="bottom|right"
+      android:layout_gravity="bottom|end"
       android:layout_margin="16dp"
-      android:src="@drawable/ic_add_a_photo_white_18dp"
-      app:fab_colorNormal="@color/primaryColor"
-      app:fab_colorPressed="@color/primaryDarkColor"
-      app:fab_colorRipple="@color/primaryLightColor" />
+      android:padding="4dp"
+      android:src="@drawable/ic_add_a_photo_white_18dp"/>
 </FrameLayout>

@@ -55,9 +55,10 @@
             android:layout_height="48dp"
             android:hint="Search Category"
             android:textSize="12dp"
+            android:layout_marginLeft="8dp"
             android:singleLine="true"
             android:maxLength="20"
-            android:paddingLeft="8dp"
+            android:paddingLeft="4dp"
             android:layout_weight="8"
             android:layout_gravity="center_vertical"
             android:backgroundTint="#ffb4b4b4" />

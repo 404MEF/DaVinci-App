@@ -46,6 +46,11 @@ namespace Davinci.Fragments.Feed
             searchRecyclerView.SetLayoutManager(searchViewManager);
         }
 
+        public override void OnViewTrigger()
+        {
+            getPopularCategories();
+        }
+
         private void setUI()
         {
             header = View.FindViewById<TextView>(Resource.Id.header);
@@ -67,13 +72,6 @@ namespace Davinci.Fragments.Feed
             searchBtn.Click += (s, e) => searchCategories();
         }
 
-        public override void OnResume()
-        {
-            base.OnResume();
-
-            getPopularCategories();
-        }
-
         private void getSearchSuggestions()
         {
             if (searchField.Text.Length >= SEARCH_SUGGESTION_START_LENGTH)
@@ -87,13 +85,14 @@ namespace Davinci.Fragments.Feed
                     if (t.Status != TaskStatus.Canceled && t.Result.OK)
                         if (suggestionAdapter == null)
                         {
-                            suggestionAdapter = new ArrayAdapter<string>(this.Context, Resource.Layout.Search_dropdownItem, t.Result.results.Select(n => "#" + n.name.Capitalize()).ToArray());
+                            var items = t.Result.results.Select(n => n.name.Capitalize()).ToArray();
+                            suggestionAdapter = new ArrayAdapter<string>(this.Context, Resource.Layout.Search_dropdownItem, items);
                             searchField.Adapter = suggestionAdapter;
                         }
                         else
                         {
                             suggestionAdapter.Clear();
-                            suggestionAdapter.AddAll(t.Result.results.Select(n => "#" + n.name.Capitalize()).ToList());
+                            suggestionAdapter.AddAll(t.Result.results.Select(n => n.name.Capitalize()).ToList());
                             suggestionAdapter.NotifyDataSetChanged();
                         }
                 }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -102,15 +101,14 @@ namespace Davinci.Fragments.Feed
             {
                 if (suggestionAdapter != null)
                 {
-                    suggestionAdapter.Clear();
-                    suggestionAdapter.NotifyDataSetChanged();
+                    suggestionAdapter.Dispose();
+                    suggestionAdapter = null;
                 }
 
                 //Show most popular categories
                 header.Text = "Most Popular Categories";
                 searchRecyclerView.Visibility = ViewStates.Gone;
                 popularRecyclerView.Visibility = ViewStates.Visible;
-                //getPopularCategories();
             }
         }
 

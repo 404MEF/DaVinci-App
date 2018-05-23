@@ -6,6 +6,8 @@ using Android.Widget;
 using Android.Support.V7.Widget;
 
 using Davinci.Adapters.Feed;
+using Davinci.Api.Models;
+using System;
 
 namespace Davinci.Fragments.Feed
 {
@@ -27,7 +29,10 @@ namespace Davinci.Fragments.Feed
 
             setUI();
             setEvents();
+        }
 
+        public override void OnViewTrigger()
+        {
             getProfilePosts();
         }
 
@@ -63,13 +68,19 @@ namespace Davinci.Fragments.Feed
 
                 if (t.Result.OK)
                 {
-                    CategoryGridAdapter adapter = new CategoryGridAdapter(t.Result.posts);
-                    adapter.ItemClick += (post) =>
+                    CategoryGridAdapter likedPostAdapter = new CategoryGridAdapter(t.Result.likedPosts);
+                    CategoryGridAdapter userPostAdapter = new CategoryGridAdapter(t.Result.userPosts);
+
+                    Action<PostModel> onClickPost = (post) =>
                     {
                         PostFragment postFragment = PostFragment.newInstance(post._id);
                         postFragment.Show(parentActivity.SupportFragmentManager, "post");
                     };
-                    likesRecyclerView.SetAdapter(adapter);
+                    likedPostAdapter.ItemClick += onClickPost;
+                    userPostAdapter.ItemClick += onClickPost;
+
+                    likesRecyclerView.SetAdapter(likedPostAdapter);
+                    postsRecyclerView.SetAdapter(userPostAdapter);
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }

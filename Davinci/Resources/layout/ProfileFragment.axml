@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      android:focusableInTouchMode="true">
     <TextView
         style="@style/SettingsActivity_CategoryLabel"
         android:id="@+id/likeHeader"
@@ -17,11 +12,13 @@
     <View
         style="@style/SettingsActivity_CategoryDivider"
         android:id="@+id/divider"
+        android:layout_below="@id/likeHeader"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp" />
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:id="@+id/likesRecyclerView" />
@@ -30,18 +27,20 @@
         android:id="@+id/postHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/likesRecyclerView"
         android:text="My Posts"
         android:paddingLeft="8dp" />
     <View
         style="@style/SettingsActivity_CategoryDivider"
         android:id="@+id/divider2"
+        android:layout_below="@id/postHeader"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp" />
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/postsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/divider2"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:id="@+id/postsRecyclerView" />
-  </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+        android:layout_marginRight="8dp"/>
+</RelativeLayout>
